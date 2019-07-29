@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cafe24.mall.dto.JSONResult;
 import com.cafe24.mall.service.UserService;
@@ -48,7 +49,24 @@ public class UserController {
 	// 회원 가입
 	@ApiOperation(value = "회원 가입")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "1234", value = "5678", required = true, dataType = "string", defaultValue = "") })
+			@ApiImplicitParam(name = "id", value = "아이디", required = true, dataType = "string", defaultValue = ""),
+			@ApiImplicitParam(name = "email", value = "이메일", required = true, dataType = "string", defaultValue = ""),
+			@ApiImplicitParam(name = "pw", value = "비밀번호", required = true, dataType = "string", defaultValue = ""),
+			@ApiImplicitParam(name = "name", value = "이름", required = true, dataType = "string", defaultValue = ""),
+			@ApiImplicitParam(name = "nickname", value = "별명", required = true, dataType = "string", defaultValue = ""),
+			@ApiImplicitParam(name = "tell_ph", value = "집전화", required = false, dataType = "string", defaultValue = ""),
+			@ApiImplicitParam(name = "cell_ph", value = "핸드폰", required = true, dataType = "string", defaultValue = ""),
+			@ApiImplicitParam(name = "join_date", value = "가입일", required = false, dataType = "string", defaultValue = ""),
+			@ApiImplicitParam(name = "addr", value = "주소", required = true, dataType = "string", defaultValue = ""),
+			@ApiImplicitParam(name = "point", value = "포인트", required = false, dataType = "string", defaultValue = "100"),
+			@ApiImplicitParam(name = "saving", value = "적립금", required = false, dataType = "string", defaultValue = ""),
+			@ApiImplicitParam(name = "birthday", value = "생일", required = false, dataType = "string", defaultValue = ""),
+			@ApiImplicitParam(name = "massive_mount", value = "누적금액", required = false, dataType = "int", defaultValue = "0"),
+			@ApiImplicitParam(name = "grade", value = "등급", required = true, dataType = "MemberEnum", defaultValue = "BRONZE"),
+			@ApiImplicitParam(name = "email_recv", value = "Email수신여부", required = false, dataType = "string", defaultValue = ""),
+			@ApiImplicitParam(name = "sms_recv", value = "sms수신여부", required = false, dataType = "string", defaultValue = ""),
+			@ApiImplicitParam(name = "purchase_cnt", value = "구매횟수", required = false, dataType = "int", defaultValue = "0"),
+			@ApiImplicitParam(name = "islogin", value = "로그인 유무", required = false, dataType = "boolean", defaultValue = "false") })
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	public ResponseEntity<JSONResult> joinUser(@RequestBody @Valid UserVo userVo, BindingResult result) {
 
@@ -74,7 +92,8 @@ public class UserController {
 	// 회원 로그인
 	@ApiOperation(value = "회원 로그인")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "id", value = "Login", required = true, dataType = "string", defaultValue = "") })
+			@ApiImplicitParam(name = "id", value = "아이디", required = true, dataType = "string", defaultValue = ""),
+			@ApiImplicitParam(name = "pw", value = "비밀번호", required = true, dataType = "string", defaultValue = "")})
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<JSONResult> loginUser(@RequestBody UserVo userVo) {
 		UserVo result = userService.loginUser(userVo);
@@ -85,6 +104,9 @@ public class UserController {
 	}
 
 	// 회원 아이디 중복 체크
+	@ApiOperation(value = "회원 아이디 중복체크")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "id", value = "아이디", required = true, dataType = "string", defaultValue = "")})
 	@RequestMapping(value = "/checkuserid", method = RequestMethod.POST)
 	public ResponseEntity<JSONResult> checkuserId(@RequestBody UserVo userVo) {
 		Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
@@ -104,6 +126,24 @@ public class UserController {
 	// 회원정보 수정 폼
 
 	// 회원정보 수정
+	@ApiOperation(value = "회원 정보 수정")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "title", value = "제목", required = true, dataType = "string", defaultValue = ""),
+			@ApiImplicitParam(name = "desc", value = "본문", required = false, dataType = "string", defaultValue = ""),
+			@ApiImplicitParam(name = "amount", value = "총 수량", required = false, dataType = "int", defaultValue = ""),
+			@ApiImplicitParam(name = "available_amount", value = "판매 가능 수량", required = true, dataType = "long", defaultValue = ""),
+			@ApiImplicitParam(name = "price", value = "가격", required = true, dataType = "long", defaultValue = ""),
+			@ApiImplicitParam(name = "non_amount", value = "재고여부 상품", required = true, dataType = "boolean", defaultValue = "false"),
+			@ApiImplicitParam(name = "displaystatus", value = "디스플레이 여부", required = true, dataType = "boolean", defaultValue = "false"),
+			@ApiImplicitParam(name = "salestatus", value = "세일 여부", required = true, dataType = "boolean", defaultValue = "false"),
+			@ApiImplicitParam(name = "reg_date", value = "등록일", required = false, dataType = "String", defaultValue = ""),
+			@ApiImplicitParam(name = "multiPartPhoto", value = "Multipart사진", required = true, dataType = "List<MultipartFile>", defaultValue = ""),
+			@ApiImplicitParam(name = "photo", value = "사진명", required = true, dataType = "List<String>", defaultValue = ""),
+			@ApiImplicitParam(name = "is_main", value = "메인사진 여부 확인", required = true, dataType = "List<Boolean>", defaultValue = "false"),
+			@ApiImplicitParam(name = "name", value = "옵션 명", required = true, dataType = "List<String>", defaultValue = ""),
+			@ApiImplicitParam(name = "top_category", value = "상위 카테고리", required = true, dataType = "String", defaultValue = ""),
+			@ApiImplicitParam(name = "low_category", value = "하위 카테고리", required = true, dataType = "String", defaultValue = "")
+			})
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	public ResponseEntity<JSONResult> modifyUser(@RequestBody @Valid UserVo userVo, BindingResult result) {
 
@@ -130,6 +170,9 @@ public class UserController {
 	}
 
 	// 회원 탈퇴
+	@ApiOperation(value = "회원 탈퇴")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "no", value = "회원번호", required = true, dataType = "int", defaultValue = "")})
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public ResponseEntity<JSONResult> secessionUser(@RequestBody UserVo userVo) {
 		System.out.println(userVo);
