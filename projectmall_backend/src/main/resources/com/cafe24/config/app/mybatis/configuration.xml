@@ -5,9 +5,11 @@
 		<!-- 긴 이름 짧게 별명으로 할 수 있게 해줌 -->
 		<typeAlias type="com.cafe24.mall.vo.UserVo" alias="uservo" />
 		<typeAlias type="com.cafe24.mall.vo.ItemVo" alias="itemvo" />
+		<typeAlias type="com.cafe24.mall.vo.CategoryVo" alias="categoryvo" />
 		<typeAlias type="com.cafe24.mall.vo.NonUserVo" alias="nonuservo" />
 		<typeAlias type="com.cafe24.mall.vo.BasketVo" alias="basketvo" />
 		<typeAlias type="com.cafe24.mall.vo.ListVo" alias="listvo" />
+		<typeAlias type="com.cafe24.mall.vo.TermVo" alias="termvo" />
 	</typeAliases>
 	
 	<mappers>

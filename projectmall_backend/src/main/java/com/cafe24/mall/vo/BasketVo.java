@@ -11,7 +11,7 @@ public class BasketVo {
 	private long accmulate; // 적립 예정 금액
 	private long total_item_price; // 물품별 총 가격
 
-	NonUserVo nonUserVo;
+	private NonUserVo nonUserVo;
 
 	public NonUserVo getNonUserVo() {
 		return nonUserVo;

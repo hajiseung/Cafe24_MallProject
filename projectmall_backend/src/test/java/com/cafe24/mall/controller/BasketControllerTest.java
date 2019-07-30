@@ -96,9 +96,9 @@ public class BasketControllerTest {
 	public void testBasketList() throws Exception {
 		BasketVo vo = new BasketVo();
 		vo.setMember_no(1);
-
+		
 		ResultActions resultActions = mockMvc.perform(
-				get("/api/basket/list").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+				post("/api/basket/list").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 
 		resultActions.andExpect(status().isOk()).andDo(print());
 	}

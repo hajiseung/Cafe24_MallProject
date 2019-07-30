@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.mall.dto.JSONResult;
 import com.cafe24.mall.service.AdminService;
+import com.cafe24.mall.vo.CategoryVo;
 import com.cafe24.mall.vo.ItemVo;
+import com.cafe24.mall.vo.TermVo;
 import com.cafe24.mall.vo.UserVo;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -36,6 +38,44 @@ public class AdminController {
 		return "login";
 	}
 
+	// 카테고리 등록
+	@RequestMapping(value = "/category/add", method = RequestMethod.POST)
+	public ResponseEntity<JSONResult> addCategory(@RequestBody @Valid CategoryVo categoryVo, BindingResult result) {
+		// 등록 오류시 에러 출력
+		if (result.hasErrors()) {
+			List<ObjectError> list = result.getAllErrors();
+			for (ObjectError error : list) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
+			}
+		}
+		adminService.addCategory(categoryVo);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(categoryVo));
+	}
+
+	// 카테고리 수정
+	@RequestMapping(value = "/category/modify", method = RequestMethod.POST)
+	public ResponseEntity<JSONResult> modifyCategory(@RequestBody @Valid CategoryVo categoryVo, BindingResult result) {
+		// 등록 오류시 에러 출력
+		if (result.hasErrors()) {
+			List<ObjectError> list = result.getAllErrors();
+			for (ObjectError error : list) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
+			}
+		}
+		int resultSql = adminService.modifyCategory(categoryVo);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(resultSql));
+	}
+
+	// 카테고리 삭제
+	// 카테고리 조회
+	@RequestMapping(value = { "/category/view**", "/category/view/**",
+			"/category/view**/**" }, method = RequestMethod.POST)
+	public ResponseEntity<JSONResult> viewCategory(@RequestBody @Valid CategoryVo categoryVo, BindingResult result) {
+		List<CategoryVo> resultSql = adminService.viewCategory(categoryVo);
+		System.out.println(resultSql);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(resultSql));
+	}
+
 	// 물품 등록 페이지
 	@RequestMapping(value = "/form/item", method = RequestMethod.GET)
 	public String getaddItemForm() {
@@ -52,11 +92,10 @@ public class AdminController {
 			@ApiImplicitParam(name = "cell_ph", value = "핸드폰 번호", required = true, dataType = "string", defaultValue = ""),
 			@ApiImplicitParam(name = "addr", value = "주소", required = true, dataType = "string", defaultValue = ""),
 			@ApiImplicitParam(name = "email_recv", value = "email 수신 여부", required = true, dataType = "boolean", defaultValue = "false"),
-			@ApiImplicitParam(name = "sms_recv", value = "sms 수신 여부", required = true, dataType = "boolean", defaultValue = "false"),
-			})
+			@ApiImplicitParam(name = "sms_recv", value = "sms 수신 여부", required = true, dataType = "boolean", defaultValue = "false"), })
 	@RequestMapping(value = "/item/add", method = RequestMethod.POST)
 	public ResponseEntity<JSONResult> addItem(@RequestBody @Valid ItemVo itemVo, BindingResult result) {
-		// 가입 오류시 에러 출력
+		// 등록 오류시 에러 출력
 		if (result.hasErrors()) {
 			List<ObjectError> list = result.getAllErrors();
 			for (ObjectError error : list) {
@@ -65,6 +104,49 @@ public class AdminController {
 		}
 		ItemVo vo = adminService.addItem(itemVo);
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(vo));
+	}
+
+	// 판매 상태 API
+	@RequestMapping(value = "/item/status", method = RequestMethod.POST)
+	public ResponseEntity<JSONResult> statusItem(@RequestBody ItemVo itemVo, BindingResult result) {
+		// 에러 출력
+		if (result.hasErrors()) {
+			List<ObjectError> list = result.getAllErrors();
+			for (ObjectError error : list) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
+			}
+		}
+		int resultSql = adminService.statusItem(itemVo);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(resultSql));
+	}
+
+	// 물품 정보 수정
+	@RequestMapping(value = "/item/modify", method = RequestMethod.POST)
+	public ResponseEntity<JSONResult> modifyItem(@RequestBody @Valid ItemVo itemVo, BindingResult result) {
+
+		// 수정 에러 출력
+		if (result.hasErrors()) {
+			List<ObjectError> list = result.getAllErrors();
+			for (ObjectError error : list) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
+			}
+		}
+		int resultSql = adminService.modifyItem(itemVo);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(resultSql));
+	}
+
+	// 삭제 API
+	@RequestMapping(value = "/item/delete", method = RequestMethod.POST)
+	public ResponseEntity<JSONResult> deleteItem(@RequestBody ItemVo itemVo, BindingResult result) {
+		// 삭제 에러 출력
+		if (result.hasErrors()) {
+			List<ObjectError> list = result.getAllErrors();
+			for (ObjectError error : list) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
+			}
+		}
+		int resultSql = adminService.deleteItem(itemVo);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(resultSql));
 	}
 
 	// 회원 관리 페이지
@@ -103,5 +185,61 @@ public class AdminController {
 	@RequestMapping(value = "/itemlist", method = RequestMethod.GET)
 	public void itemList() {
 		adminService.itemList();
+	}
+
+	// 약관 동의서 등록
+	@RequestMapping(value = "/terms/add", method = RequestMethod.POST)
+	public ResponseEntity<JSONResult> addTerms(@RequestBody @Valid TermVo termVo, BindingResult result) {
+		// 등록 에러 출력
+		if (result.hasErrors()) {
+			List<ObjectError> list = result.getAllErrors();
+			for (ObjectError error : list) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
+			}
+		}
+		TermVo resultSql = adminService.addTerms(termVo);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(resultSql));
+	}
+
+	// 약관 동의서 수정
+	@RequestMapping(value = "/terms/modify", method = RequestMethod.POST)
+	public ResponseEntity<JSONResult> modifyTerms(@RequestBody TermVo termVo, BindingResult result) {
+		// 수정 에러 출력
+		if (result.hasErrors()) {
+			List<ObjectError> list = result.getAllErrors();
+			for (ObjectError error : list) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
+			}
+		}
+		int resultSql = adminService.modifyTerms(termVo);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(resultSql));
+	}
+
+	// 약관 동의서 조회
+	@RequestMapping(value = "/terms/view", method = RequestMethod.POST)
+	public ResponseEntity<JSONResult> viewTerms(@RequestBody TermVo termVo, BindingResult result) {
+		// 조회 에러 출력
+		if (result.hasErrors()) {
+			List<ObjectError> list = result.getAllErrors();
+			for (ObjectError error : list) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
+			}
+		}
+		List<TermVo> resultSql = adminService.viewTerms(termVo);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(resultSql));
+	}
+
+	// 약관 동의서 삭제
+	@RequestMapping(value = "/terms/delete", method = RequestMethod.POST)
+	public ResponseEntity<JSONResult> deleteTerms(@RequestBody TermVo termVo, BindingResult result) {
+		// 삭제 에러 출력
+		if (result.hasErrors()) {
+			List<ObjectError> list = result.getAllErrors();
+			for (ObjectError error : list) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
+			}
+		}
+		int resultSql = adminService.deleteTerms(termVo);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(resultSql));
 	}
 }

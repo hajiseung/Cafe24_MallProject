@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cafe24.mall.vo.CategoryVo;
 import com.cafe24.mall.vo.ItemVo;
+import com.cafe24.mall.vo.TermVo;
 import com.cafe24.mall.vo.UserVo;
 
 @Repository
@@ -22,8 +24,9 @@ public class AdminDao {
 	public ItemVo addItem(ItemVo itemVo) {
 
 		Map<String, Object> map = new HashMap<>();
-		// 카테고리 등록
-		sqlSession.insert("admin.addCategory", itemVo);
+		// 카테고리 추출
+		CategoryVo vo = sqlSession.selectOne("admin.getCategoryNo", itemVo.getCategoryVo());
+		itemVo.setCategory_no(vo.getNo());
 		// Item 등록
 		sqlSession.insert("admin.addItem", itemVo);
 		// Item_detail 등록
@@ -50,6 +53,62 @@ public class AdminDao {
 
 	public List<UserVo> getUserList() {
 		return sqlSession.selectList("admin.getUserList");
+	}
+
+	@Transactional
+	public int statusItem(ItemVo itemVo) {
+		return sqlSession.update("admin.statusItem", itemVo);
+	}
+
+	public int deleteItem(ItemVo itemVo) {
+		int result;
+		result = sqlSession.delete("admin.deleteItem_option", itemVo);
+		result += sqlSession.delete("admin.deleteItem_photo", itemVo);
+		result += sqlSession.delete("admin.deleteItem_detail", itemVo);
+		result += sqlSession.delete("admin.deleteItem", itemVo);
+		return result;
+	}
+
+	// 물품 수정
+	public int modifyItem(ItemVo itemVo) {
+		// title update
+		System.out.println(itemVo);
+		sqlSession.update("admin.updateItem", itemVo);
+
+		return 0;
+	}
+
+	// 카테고리 등록
+	public CategoryVo addCategory(CategoryVo categoryVo) {
+		sqlSession.insert("admin.addCategory", categoryVo);
+		return categoryVo;
+	}
+
+	// 카테고리 수정
+	public int modifyCategory(CategoryVo categoryVo) {
+		return sqlSession.update("admin.modifyCategory", categoryVo);
+	}
+
+	public List<CategoryVo> viewCategory(CategoryVo categoryVo) {
+		return sqlSession.selectList("admin.viewCategory", categoryVo);
+	}
+
+	public TermVo addTerms(TermVo termVo) {
+		sqlSession.insert("admin.addTerms", termVo);
+		return termVo;
+	}
+
+	// 약관 보기
+	public List<TermVo> viewTerms(TermVo termVo) {
+		return sqlSession.selectList("admin.viewTerms");
+	}
+
+	public int deleteTerms(TermVo termVo) {
+		return sqlSession.delete("admin.deleteTerms", termVo);
+	}
+
+	public int modifyTerms(TermVo termVo) {
+		return sqlSession.update("admin.modifyTerms", termVo);
 	}
 
 }

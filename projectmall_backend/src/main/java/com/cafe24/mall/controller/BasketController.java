@@ -26,7 +26,7 @@ public class BasketController {
 	private BasketService basketService;
 
 	// 바로구매
-	@RequestMapping(value = "/immediate")
+	@RequestMapping(value = "/immediate", method = RequestMethod.POST)
 	public void immediatelyPurchase(ItemVo itemVo) {
 		basketService.immediatelyPurchase(itemVo);
 	}
@@ -58,10 +58,9 @@ public class BasketController {
 	}
 
 	// 장바구니 리스트 호출
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	public void getBasketList(@RequestBody BasketVo basketVo) {
 		List<ListVo> list = basketService.getBasketList(basketVo);
-		System.out.println(list);
 	}
 
 	// 장바구니-물품 삭제

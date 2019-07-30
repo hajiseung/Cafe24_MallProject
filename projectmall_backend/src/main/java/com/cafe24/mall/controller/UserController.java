@@ -161,7 +161,7 @@ public class UserController {
 //		return "redirect:/";
 	}
 
-	// 회원 로그아웃 (인터페이스로 옮길 예정)
+	// 회원 로그아웃
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
 		session.removeAttribute("authUser");

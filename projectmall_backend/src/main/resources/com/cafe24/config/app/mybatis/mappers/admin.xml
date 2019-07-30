@@ -2,18 +2,38 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="admin">
-	<!-- 카테고리 등록 -->
-	<insert id="addCategory" parameterType="itemvo">
+	<!-- 카테고리 등록 - -->
+	<insert id="addCategory" parameterType="categoryvo">
 		<![CDATA[
 		insert into item_category values(null, #{top_category},#{low_category})
 		]]>
-		<selectKey keyProperty="category_no" resultType="long"
-			order="AFTER">
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
 		<![CDATA[
-			select last_insert_id() as category_no
+			select last_insert_id() as no
 		]]>
 		</selectKey>
 	</insert>
+	<!-- 카테고리 수정 -->
+	<update id="modifyCategory">
+	<![CDATA[
+		UPDATE item_category SET top_category=#{top_category}, low_category=#{low_category} where no=#{no}
+	]]>
+	</update>
+
+	<!-- 카테고리 조회 -->
+	<select id="viewCategory" resultType="categoryvo">
+	<![CDATA[
+		select * from item_category
+	]]>
+	</select>
+
+	<!-- 카테고리 no 받아오기 -->
+	<select id="getCategoryNo" parameterType="categoryvo"
+		resultType="categoryvo">
+	<![CDATA[
+		select no from item_category where top_category=#{top_category} and low_category=#{low_category}
+	]]>
+	</select>
 
 	<!-- 물품 등록 -->
 	<insert id="addItem" parameterType="itemvo">
@@ -28,7 +48,7 @@
 		</selectKey>
 	</insert>
 
-	<!-- 물품 등록 -->
+	<!-- 물품 세부 등록 -->
 	<insert id="addItemDetail" parameterType="itemvo">
 	<![CDATA[
 		insert into item_detail
@@ -50,9 +70,84 @@
 	 	insert into item_photo values(null,#{no},#{photo},#{is_main}) 
 	]]>
 	</insert>
+
 	<select id="getUserList" resultType="uservo">
 	<![CDATA[
 		select no, id, email, name, nickname, addr, tell_ph, cell_ph, join_date, point, saving, bitrhday, massive_mount, upper(grade), email_recv, sms_recv, purchase_cnt from member limit 0,10
 	]]>
 	</select>
+
+	<!-- 물품 상태 변경 -->
+	<update id="statusItem">
+	<![CDATA[
+		  update item_detail set salestatus=#{salestatus} where item_no=#{no}
+	]]>
+	</update>
+
+	<!--물품 삭제 -->
+	<delete id="deleteItem" parameterType="itemvo">
+	<![CDATA[
+		DELETE FROM item WHERE no=#{no}
+	]]>
+	</delete>
+
+	<delete id="deleteItem_detail" parameterType="itemvo">
+	<![CDATA[
+		DELETE FROM item_detail WHERE item_no=#{no}
+	]]>
+	</delete>
+
+	<delete id="deleteItem_photo" parameterType="itemvo">
+	<![CDATA[
+		DELETE FROM item_photo WHERE item_no=#{no}
+	]]>
+	</delete>
+
+	<delete id="deleteItem_option" parameterType="itemvo">
+	<![CDATA[
+		DELETE FROM item_option WHERE item_no=#{no}
+	]]>
+	</delete>
+
+	<!-- 물품 정보 수정 -->
+	<update id="updateItem" parameterType="itemvo">
+	<![CDATA[
+		Update item set title = #{title},desc_html = #{desc_html} where no=#{no}
+	]]>
+	</update>
+
+	<!--약관 등록 -->
+	<insert id="addTerms">
+	<![CDATA[
+		INSERT INTO terms values(null,#{title},#{contents}, now(), #{registrant}, null, null, #{isnecessary})
+	]]>
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
+		<![CDATA[
+			select last_insert_id() as no
+		]]>
+		</selectKey>
+	</insert>
+
+	<!-- 약관 보기 -->
+	<select id="viewTerms" resultType="termvo">
+	<![CDATA[
+		SELECT no,title,contents FROM terms;
+	]]>
+	</select>
+	
+	<!-- 약관 수정 -->
+	<update id="modifyTerms">
+	<![CDATA[
+		UPDATE terms 
+		SET title=#{title}, contents=#{contents}, update_date=now(), modifier=#{modifier}
+		WHERE no=#{no}
+	]]>
+	</update>
+	
+	<!-- 약관 삭제 -->
+	<delete id="deleteTerms" parameterType="termvo">
+	<![CDATA[
+		DELETE FROM terms where no=#{no}
+	]]>
+	</delete>	
 </mapper>

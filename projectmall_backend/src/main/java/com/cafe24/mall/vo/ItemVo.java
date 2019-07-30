@@ -12,7 +12,7 @@ public class ItemVo {
 	private long category_no;
 	@NotNull
 	private String title;
-	private String desc;
+	private String desc_html;
 
 	// item_detail
 	@NotNull
@@ -40,10 +40,13 @@ public class ItemVo {
 	private List<String> name;
 
 	// item_category
-	@NotNull
-	private String top_category;
-	@NotNull
-	private String low_category;
+//	@NotNull
+//	private String top_category;
+//	@NotNull
+//	private String low_category;
+	private CategoryVo categoryVo;
+
+	private BasketVo basketVo;
 
 	public long getNo() {
 		return no;
@@ -57,8 +60,8 @@ public class ItemVo {
 		return title;
 	}
 
-	public String getDesc() {
-		return desc;
+	public String getDesc_html() {
+		return desc_html;
 	}
 
 	public long getAmount() {
@@ -105,12 +108,12 @@ public class ItemVo {
 		return name;
 	}
 
-	public String getTop_category() {
-		return top_category;
+	public CategoryVo getCategoryVo() {
+		return categoryVo;
 	}
 
-	public String getLow_category() {
-		return low_category;
+	public BasketVo getBasketVo() {
+		return basketVo;
 	}
 
 	public void setNo(long no) {
@@ -125,8 +128,8 @@ public class ItemVo {
 		this.title = title;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDesc_html(String desc_html) {
+		this.desc_html = desc_html;
 	}
 
 	public void setAmount(long amount) {
@@ -173,21 +176,21 @@ public class ItemVo {
 		this.name = name;
 	}
 
-	public void setTop_category(String top_category) {
-		this.top_category = top_category;
+	public void setCategoryVo(CategoryVo categoryVo) {
+		this.categoryVo = categoryVo;
 	}
 
-	public void setLow_category(String low_category) {
-		this.low_category = low_category;
+	public void setBasketVo(BasketVo basketVo) {
+		this.basketVo = basketVo;
 	}
 
 	@Override
 	public String toString() {
-		return "ItemVo [no=" + no + ", category_no=" + category_no + ", title=" + title + ", desc=" + desc + ", amount="
-				+ amount + ", available_amount=" + available_amount + ", price=" + price + ", non_amount=" + non_amount
-				+ ", displaystatus=" + displaystatus + ", salestatus=" + salestatus + ", reg_date=" + reg_date
-				+ ", multiPartPhoto=" + multiPartPhoto + ", photo=" + photo + ", is_main=" + is_main + ", name=" + name
-				+ ", top_category=" + top_category + ", low_category=" + low_category + "]";
+		return "ItemVo [no=" + no + ", category_no=" + category_no + ", title=" + title + ", desc_html=" + desc_html
+				+ ", amount=" + amount + ", available_amount=" + available_amount + ", price=" + price + ", non_amount="
+				+ non_amount + ", displaystatus=" + displaystatus + ", salestatus=" + salestatus + ", reg_date="
+				+ reg_date + ", multiPartPhoto=" + multiPartPhoto + ", photo=" + photo + ", is_main=" + is_main
+				+ ", name=" + name + ", categoryVo=" + categoryVo + ", basketVo=" + basketVo + "]";
 	}
 
 }
