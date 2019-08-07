@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<!-- 긴 이름 짧게 별명으로 할 수 있게 해줌 -->
+		<typeAlias type="com.cafe24.jblog2.vo.UserVo" alias="uservo" />
+		<typeAlias type="com.cafe24.jblog2.vo.CategoryVo" alias="categoryvo" />
+		<typeAlias type="com.cafe24.jblog2.vo.PostVo" alias="postvo" />
+		<typeAlias type="com.cafe24.jblog2.vo.BlogVo" alias="blogvo" />
+	</typeAliases>
+
+	<mappers>
+		<!-- sql문에 result와 parameter을 매핑하는 파일 -->
+		<mapper resource="com/cafe24/config/app/mybatis/mappers/user.xml" />
+		<mapper resource="com/cafe24/config/app/mybatis/mappers/category.xml" />
+		<mapper resource="com/cafe24/config/app/mybatis/mappers/post.xml" />
+		<mapper resource="com/cafe24/config/app/mybatis/mappers/blog.xml" />
+	</mappers>
+</configuration>

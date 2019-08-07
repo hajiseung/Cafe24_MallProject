@@ -10,11 +10,14 @@
 		<typeAlias type="com.cafe24.mall.vo.BasketVo" alias="basketvo" />
 		<typeAlias type="com.cafe24.mall.vo.ListVo" alias="listvo" />
 		<typeAlias type="com.cafe24.mall.vo.TermVo" alias="termvo" />
+		<typeAlias type="com.cafe24.mall.vo.OrderVo" alias="ordervo" />
+		<typeAlias type="com.cafe24.mall.vo.AdminVo" alias="adminvo" />
 	</typeAliases>
 	
 	<mappers>
 		<!-- sql문에 result와 parameter을 매핑하는 파일 -->
 		<mapper resource="com/cafe24/config/app/mybatis/mappers/user.xml" />
+		<mapper resource="com/cafe24/config/app/mybatis/mappers/order.xml" />
 		<mapper resource="com/cafe24/config/app/mybatis/mappers/admin.xml" />
 		<mapper resource="com/cafe24/config/app/mybatis/mappers/basket.xml" />
 	</mappers>

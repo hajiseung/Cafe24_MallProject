@@ -146,7 +146,6 @@ public class UserController {
 			})
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	public ResponseEntity<JSONResult> modifyUser(@RequestBody @Valid UserVo userVo, BindingResult result) {
-
 		// 오류시 에러 출력
 		if (result.hasErrors()) {
 			List<ObjectError> list = result.getAllErrors();
@@ -154,7 +153,6 @@ public class UserController {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
 			}
 		}
-		System.out.println(userVo);
 		int sqlresult = userService.modifyUser(userVo);
 		System.out.println(sqlresult);
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(userVo));
@@ -175,7 +173,6 @@ public class UserController {
 			@ApiImplicitParam(name = "no", value = "회원번호", required = true, dataType = "int", defaultValue = "")})
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public ResponseEntity<JSONResult> secessionUser(@RequestBody UserVo userVo) {
-		System.out.println(userVo);
 		int result = userService.secessionUser(userVo);
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
 	}

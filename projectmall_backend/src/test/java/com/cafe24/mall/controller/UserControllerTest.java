@@ -73,7 +73,7 @@ public class UserControllerTest {
 		// 아이디 오류
 		vo.setId("tmdwlgk0109@@");
 		vo.setEmail("tmdwlgk0109@naver.com");
-		vo.setPw("1q2w3e4r");
+		vo.setPw("1q2w3e4r@");
 		vo.setName("하지승");
 		vo.setNickname("Nomacs");
 		vo.setAddr("동탄");
@@ -89,7 +89,7 @@ public class UserControllerTest {
 		// 이메일 오류
 		vo.setId("tmdwlgk0109");
 		vo.setEmail("tmdwlgk0109");
-		vo.setPw("1q2w3e4r");
+		vo.setPw("1q2w3e4r@");
 		vo.setName("하지승");
 		vo.setNickname("Nomacs");
 		vo.setAddr("동탄");
@@ -105,7 +105,7 @@ public class UserControllerTest {
 		// 전화번호 오류
 		vo.setId("tmdwlgk0109");
 		vo.setEmail("tmdwlgk0109@naver.com");
-		vo.setPw("1q2w3e4r");
+		vo.setPw("1q2w3e4r@");
 		vo.setName("하지승");
 		vo.setNickname("Nomacs");
 		vo.setAddr("동탄");
@@ -223,16 +223,73 @@ public class UserControllerTest {
 				post("/api/user/modify").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 
 		resultActions.andExpect(status().isOk()).andDo(print())/* .andExpect(jsonPath("$.data.no", is(1))) */;
+		
+		// E-Mail형식오류
+		vo = new UserVo();
+		vo.setId("tmdwlgk0109");
+		vo.setEmail("tmdwlgk0109");
+		vo.setPw("1q2w3e4r@");
+		vo.setName("하지승");
+		vo.setAddr("DongTan");
+		vo.setTell_ph(null);
+		vo.setCell_ph("010-3337-7686");
+		vo.setBirthday("901006");
+		vo.setEmail_recv(true);
+		vo.setSms_recv(true);
+
+		vo.setNickname("Nellas");
+		resultActions = mockMvc.perform(
+				post("/api/user/modify").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+
+		resultActions.andExpect(status().isBadRequest()).andDo(print());
+		
+		// 핸드폰 형식오류
+		vo = new UserVo();
+		vo.setId("tmdwlgk0109");
+		vo.setEmail("tmdwlgk0109@naver.com");
+		vo.setPw("1q2w3e4r@");
+		vo.setName("하지승");
+		vo.setAddr("DongTan");
+		vo.setTell_ph(null);
+		vo.setCell_ph("01654987");
+		vo.setBirthday("901006");
+		vo.setEmail_recv(true);
+		vo.setSms_recv(true);
+		
+		vo.setNickname("Nellas");
+		resultActions = mockMvc.perform(
+				post("/api/user/modify").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		
+		resultActions.andExpect(status().isBadRequest()).andDo(print());
+		
+		// 비밀번호 형식오류
+		vo = new UserVo();
+		vo.setId("tmdwlgk0109");
+		vo.setEmail("tmdwlgk0109@naver.com");
+		vo.setPw("1q2w3e4r");
+		vo.setName("하지승");
+		vo.setAddr("DongTan");
+		vo.setTell_ph(null);
+		vo.setCell_ph("010-3337-7686");
+		vo.setBirthday("901006");
+		vo.setEmail_recv(true);
+		vo.setSms_recv(true);
+		
+		vo.setNickname("Nellas");
+		resultActions = mockMvc.perform(
+				post("/api/user/modify").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		
+		resultActions.andExpect(status().isBadRequest()).andDo(print());
 	}
 
 	// 회원 삭제 Test
 	@Test
 	public void testUserDelete() throws Exception {
-//		UserVo vo = new UserVo();
-//		vo.setNo(1);
-//		ResultActions resultActions = mockMvc.perform(
-//				post("/api/user/delete").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
-//
-//		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.data.no", is(1)));
+		UserVo vo = new UserVo();
+		vo.setNo(4);
+		ResultActions resultActions = mockMvc.perform(
+				post("/api/user/delete").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+
+		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.data", is(1)));
 	}
 }

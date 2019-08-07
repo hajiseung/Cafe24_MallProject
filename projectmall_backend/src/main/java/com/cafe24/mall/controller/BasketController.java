@@ -25,15 +25,7 @@ public class BasketController {
 	@Autowired
 	private BasketService basketService;
 
-	// 바로구매
-	@RequestMapping(value = "/immediate", method = RequestMethod.POST)
-	public void immediatelyPurchase(ItemVo itemVo) {
-		basketService.immediatelyPurchase(itemVo);
-	}
-
-	// 장바구니 저장
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public ResponseEntity<JSONResult> addItemToBasket(@RequestBody BasketVo basketVo) {
+	public BasketVo isUser(BasketVo basketVo) {
 		NonUserVo isRegNonUser = new NonUserVo();
 		if (basketVo.getMember_no() != 0) {
 			basketVo.setMember_no(basketVo.getMember_no());
@@ -53,14 +45,31 @@ public class BasketController {
 				basketVo.setMember_no(0);
 			}
 		}
+		return basketVo;
+	}
+	
+	// 바로구매 (장바구니와 같지만 return만 페이지가 다르다) 
+	@RequestMapping(value = "/immediate", method = RequestMethod.POST)
+	public ResponseEntity<JSONResult> immediatelyPurchase(@RequestBody BasketVo basketVo) {
+		basketVo = isUser(basketVo);
+		basketVo = basketService.addItemToBasket(basketVo);
+//		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success("immeditatePage"));
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(basketVo));
+	}
+
+	// 장바구니 저장
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	public ResponseEntity<JSONResult> addItemToBasket(@RequestBody BasketVo basketVo) {
+		basketVo = isUser(basketVo);
 		basketVo = basketService.addItemToBasket(basketVo);
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(basketVo));
 	}
 
 	// 장바구니 리스트 호출
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
-	public void getBasketList(@RequestBody BasketVo basketVo) {
+	public ResponseEntity<JSONResult> getBasketList(@RequestBody BasketVo basketVo) {
 		List<ListVo> list = basketService.getBasketList(basketVo);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(list));
 	}
 
 	// 장바구니-물품 삭제

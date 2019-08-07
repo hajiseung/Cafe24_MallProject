@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="post">
+	<!-- 포스트 글 리스트 출력 -->
+	<select id="getList" parameterType="blogvo" resultType="postvo">
+		<![CDATA[
+			select a.c_no,b.p_no,b.p_title,b.p_desc,date_format(b.p_regdate,'%Y-%m-%d') as p_regdate
+			from category a, post b 
+			where a.blogid=#{blogid} and a.c_no = b.c_no
+		]]>
+		<if test="c_no != null">
+			and a.c_no = #{c_no}
+		</if>			
+		<![CDATA[
+			order by p_regdate desc
+		]]>
+	</select>
+	<insert id="blogAdminWrite" parameterType="map">
+		<![CDATA[
+			insert into post 
+			values(null,#{p_title},#{p_desc},now(),(select c_no from category where blogid=#{blogid} and c_no=#{c_no}))	
+		]]>
+	</insert>
+	<insert id="insertdefaultPost" parameterType="categoryvo">
+		<![CDATA[
+			insert into post 
+			values(null,'기본 게시글','안녕하세요 기본 게시글입니다.',now(),#{c_no})	
+		]]>
+	</insert>
+
+	<select id="getOne" parameterType="map" resultType="postvo">
+		<![CDATA[
+			select b.p_no, b.p_title, b.p_desc,b.p_regdate 
+			from category a, post b 
+			where a.blogid=#{blogid} 
+		]]>
+		<choose>
+			<when test="p_no == null and c_no != null">
+				and a.c_no=#{c_no}
+			</when>
+			<when test="p_no != null">
+				and a.c_no=#{c_no} and b.p_no=#{p_no}
+			</when>
+		</choose>
+		<![CDATA[
+		and a.c_no = b.c_no limit 0,1
+		]]>
+	</select>
+	<delete id="deleteCategory" parameterType="categoryvo">
+		<![CDATA[
+			delete from post where c_no=#{c_no} 
+		]]>
+	</delete>
+
+
+</mapper>

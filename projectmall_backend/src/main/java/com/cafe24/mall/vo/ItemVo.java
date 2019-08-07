@@ -15,9 +15,9 @@ public class ItemVo {
 	private String desc_html;
 
 	// item_detail
+	private long item_detail_no;
 	@NotNull
 	private long amount;
-
 	@NotNull
 	private long available_amount;
 
@@ -62,6 +62,10 @@ public class ItemVo {
 
 	public String getDesc_html() {
 		return desc_html;
+	}
+
+	public long getItem_detail_no() {
+		return item_detail_no;
 	}
 
 	public long getAmount() {
@@ -132,6 +136,10 @@ public class ItemVo {
 		this.desc_html = desc_html;
 	}
 
+	public void setItem_detail_no(long item_detail_no) {
+		this.item_detail_no = item_detail_no;
+	}
+
 	public void setAmount(long amount) {
 		this.amount = amount;
 	}
@@ -187,10 +195,11 @@ public class ItemVo {
 	@Override
 	public String toString() {
 		return "ItemVo [no=" + no + ", category_no=" + category_no + ", title=" + title + ", desc_html=" + desc_html
-				+ ", amount=" + amount + ", available_amount=" + available_amount + ", price=" + price + ", non_amount="
-				+ non_amount + ", displaystatus=" + displaystatus + ", salestatus=" + salestatus + ", reg_date="
-				+ reg_date + ", multiPartPhoto=" + multiPartPhoto + ", photo=" + photo + ", is_main=" + is_main
-				+ ", name=" + name + ", categoryVo=" + categoryVo + ", basketVo=" + basketVo + "]";
+				+ ", item_detail_no=" + item_detail_no + ", amount=" + amount + ", available_amount=" + available_amount
+				+ ", price=" + price + ", non_amount=" + non_amount + ", displaystatus=" + displaystatus
+				+ ", salestatus=" + salestatus + ", reg_date=" + reg_date + ", multiPartPhoto=" + multiPartPhoto
+				+ ", photo=" + photo + ", is_main=" + is_main + ", name=" + name + ", categoryVo=" + categoryVo
+				+ ", basketVo=" + basketVo + "]";
 	}
 
 }

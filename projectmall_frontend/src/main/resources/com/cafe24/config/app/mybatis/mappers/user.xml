@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="user">
+	<!-- id 유무 검사 -->
+	<select id="checkid" resultType="uservo" parameterType="uservo">
+		<![CDATA[
+			select userid from user where userid=#{userid}
+		]]>
+	</select>
+
+	<!-- 로그인 시 회원정보 받아옴 -->
+	<select id="get" parameterType="uservo" resultType="uservo">
+		<![CDATA[
+			select userid,username 
+			from user 
+			where userid=#{userid} and userpassword=#{userpassword}
+		]]>
+	</select>
+
+	<!-- 회원 가입 -->
+	<insert id="join" parameterType="uservo">
+		<![CDATA[
+				insert into user
+				values(#{userid},#{userpassword},now(),#{username})
+			]]>
+	</insert>
+	<insert id="joinBlog" parameterType="uservo">
+		<![CDATA[
+				insert into blog 
+				values((select a.userid from user a where userid=#{userid}), #{userid}, null)
+			]]>
+	</insert>
+	<insert id="joinCategory" parameterType="uservo">
+		<![CDATA[
+				insert into category 
+				values(null, '기본 카테고리','안녕하세요 기본 카테고리입니다.',now(),(select a.blogid from blog a where blogid=#{userid}))
+			]]>
+	</insert>
+	<insert id="joinPost" parameterType="uservo">
+		<!-- 여기 수정해야함 -->
+		<![CDATA[
+				insert into post 
+				values(null,'기본 타이틀','안녕하세요 기본 게시글입니다.',now(),(select a.c_no c_no from category a where blogid=#{userid}))
+			]]>
+	</insert>
+
+	<!-- 로그인 -->
+	<select id="login" parameterType="uservo" resultType="uservo">
+		<![CDATA[
+			select userid,username
+			from user
+			where userid=#{userid} and userpassword=#{userpassword}
+		]]>
+	</select>
+
+</mapper>

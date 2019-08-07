@@ -25,6 +25,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.cafe24.mall.config.AppConfig;
 import com.cafe24.mall.config.TestWebConfig;
 import com.cafe24.mall.service.AdminService;
+import com.cafe24.mall.vo.AdminVo;
 import com.cafe24.mall.vo.BasketVo;
 import com.cafe24.mall.vo.CategoryVo;
 import com.cafe24.mall.vo.ItemVo;
@@ -54,13 +55,24 @@ public class AdminControllerTest {
 		assertNotNull(adminService);
 	}
 
+	@Test
+	public void testAdminLogin() throws Exception{
+		AdminVo vo = new AdminVo();
+		vo.setId("admin");
+		vo.setPw("1234");
+		ResultActions resultActions = mockMvc.perform(
+				post("/api/admin/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+
+		resultActions.andExpect(status().isOk()).andDo(print());
+
+	}
 	// 카테고리 등록
 	@Test
 	public void testCategoryAdd() throws Exception {
 		// 정상 insert
 		CategoryVo vo = new CategoryVo();
-		vo.setTop_category("하의");
-		vo.setLow_category("반바지");
+		vo.setTop_category("상의");
+		vo.setLow_category("티셔츠");
 		ResultActions resultActions = mockMvc.perform(
 				post("/api/admin/category/add").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 
@@ -68,7 +80,7 @@ public class AdminControllerTest {
 
 		// 유효성 검사 탈락
 		vo = new CategoryVo();
-		vo.setTop_category("하의");
+		vo.setTop_category("상의");
 		resultActions = mockMvc.perform(
 				post("/api/admin/category/add").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 
@@ -79,13 +91,31 @@ public class AdminControllerTest {
 	@Test
 	public void testCategoryModify() throws Exception {
 		CategoryVo vo = new CategoryVo();
-		vo.setNo(7);
+		vo.setNo(2);
 		vo.setTop_category("악세사리");
 		vo.setLow_category("손목시계");
 		ResultActions resultActions = mockMvc.perform(post("/api/admin/category/modify")
 				.contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 
 		resultActions.andExpect(status().isOk()).andDo(print());
+
+		// 상위 카테고리 미 입력
+		vo = new CategoryVo();
+		vo.setNo(2);
+		vo.setLow_category("손목시계");
+		resultActions = mockMvc.perform(post("/api/admin/category/modify")
+				.contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		
+		resultActions.andExpect(status().isBadRequest()).andDo(print());
+		
+		// 하위 카테고리 미 입력
+		vo = new CategoryVo();
+		vo.setNo(2);
+		vo.setTop_category("악세사리");
+		resultActions = mockMvc.perform(post("/api/admin/category/modify")
+				.contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		
+		resultActions.andExpect(status().isBadRequest()).andDo(print());
 
 	}
 
@@ -204,17 +234,18 @@ public class AdminControllerTest {
 		resultActions.andExpect(status().isOk()).andDo(print());
 	}
 
-	// 물품 수정 Test 진행중.............
+	// 물품 수정 Test
 	@Test
 	public void testItemModify() throws Exception {
 		ItemVo vo = new ItemVo();
 		vo.setNo(1);
+		vo.setItem_detail_no(1);
 		vo.setTitle("타이틀 정보 수정");
 		vo.setDesc_html("본문 수정");
 		vo.setCategory_no(1);
-		vo.setAmount(1);
-		vo.setAvailable_amount(1);
-		vo.setPrice(1);
+		vo.setAmount(50);
+		vo.setAvailable_amount(10);
+		vo.setPrice(2000);
 		vo.setNon_amount(true);
 		vo.setDisplaystatus(true);
 		vo.setSalestatus(true);
@@ -224,19 +255,17 @@ public class AdminControllerTest {
 
 		resultActions.andExpect(status().isOk()).andDo(print());
 
-//		// low_Category Null
-//		vo = new ItemVo();
-//		vo.setTitle("타이틀 정보 수정");
-//		vo.setAmount(1);
-//		vo.setAvailable_amount(1);
-//		vo.setPrice(1);
-//		vo.setNon_amount(true);
-//		vo.setDisplaystatus(true);
-//		vo.setSalestatus(true);
-//		resultActions = mockMvc.perform(
-//				post("/api/admin/item/modify").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
-//
-//		resultActions.andExpect(status().isBadRequest()).andDo(print());
+//		// price Null
+		vo = new ItemVo();
+		vo.setAmount(1);
+		vo.setAvailable_amount(1);
+		vo.setNon_amount(true);
+		vo.setDisplaystatus(true);
+		vo.setSalestatus(true);
+		resultActions = mockMvc.perform(
+				post("/api/admin/item/modify").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+
+		resultActions.andExpect(status().isBadRequest()).andDo(print());
 	}
 
 	// 물품 삭제 Test
@@ -254,14 +283,44 @@ public class AdminControllerTest {
 	@Test
 	public void testAddTerms() throws Exception {
 		TermVo vo = new TermVo();
-		vo.setTitle("제목4");
-		vo.setContents("동의서4");
+		vo.setTitle("제목1");
+		vo.setContents("동의서1");
 		vo.setIsnecessary(true);
 		vo.setRegistrant("하지승");
 		ResultActions resultActions = mockMvc.perform(
 				post("/api/admin/terms/add").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 
 		resultActions.andExpect(status().isOk()).andDo(print());
+
+		// 동의서 제목 없을 때
+		vo = new TermVo();
+		vo.setContents("동의서1");
+		vo.setIsnecessary(true);
+		vo.setRegistrant("하지승");
+		resultActions = mockMvc.perform(
+				post("/api/admin/terms/add").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+
+		resultActions.andExpect(status().isBadRequest()).andDo(print());
+		
+		// 동의서 내용 없을 때
+		vo = new TermVo();
+		vo.setTitle("제목1");
+		vo.setIsnecessary(true);
+		vo.setRegistrant("하지승");
+		resultActions = mockMvc.perform(
+				post("/api/admin/terms/add").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		
+		resultActions.andExpect(status().isBadRequest()).andDo(print());
+		
+		// 동의서 작성자 없을 때
+		vo = new TermVo();
+		vo.setTitle("제목1");
+		vo.setContents("동의서1");
+		vo.setIsnecessary(true);
+		resultActions = mockMvc.perform(
+				post("/api/admin/terms/add").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+		
+		resultActions.andExpect(status().isBadRequest()).andDo(print());
 	}
 
 	// 약관 동의 수정 Test

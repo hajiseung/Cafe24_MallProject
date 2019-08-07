@@ -11,22 +11,21 @@
 	]]>
 		<choose>
 			<when test="member_no == 0">
-		<![CDATA[
-			null, #{nonmember_no},
+			<![CDATA[
+				null, #{nonmember_no},
 			]]>
 			</when>
 			<otherwise>
-		<![CDATA[
-		#{member_no}, null,
-		]]>
+			<![CDATA[
+				#{member_no}, null,
+			]]>
 			</otherwise>
 		</choose>
 	<![CDATA[
 	 #{item_no},#{option_no},#{item_count}, (select (price*0.1) from item_detail where item_no=#{item_no}), 
 		(select (price*#{item_count}) from item_detail where item_no=#{item_no}))
-		]]>
-		<selectKey keyProperty="basket_no" resultType="long"
-			order="AFTER">
+	]]>
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
 		<![CDATA[
 			select last_insert_id()
 		]]>

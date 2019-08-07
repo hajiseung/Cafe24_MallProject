@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="order">
+	<!-- 구매 추가 -->
+	<insert id="addPurchase" parameterType="ordervo">
+	<![CDATA[
+		insert into purchase_page 
+		values(null,#{basket_no},#{total_price},#{shipping}, #{b_member},#{b_tell_ph},#{b_cell_ph},#{memo},#{order_identify},#{account})
+		]]>
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
+		<![CDATA[
+			select last_insert_id() as no
+		]]>
+		</selectKey>
+	</insert>
+
+</mapper>

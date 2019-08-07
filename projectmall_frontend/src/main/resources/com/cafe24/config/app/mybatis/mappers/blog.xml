@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="blog">
+	<!-- 블로그 사용자 정보 출력 -->
+	<select id="get" parameterType="blogvo" resultType="blogvo">
+		<![CDATA[
+			select * 
+			from blog
+			where blogid=#{blogid}
+		]]>
+	</select>
+	<update id="updateBlog" parameterType="blogvo">
+		<![CDATA[
+			update blog 
+			set blogtitle=#{blogtitle}  
+		]]>
+		<if test="bloglogo != ''">
+			,bloglogo=#{bloglogo}
+		</if>
+		<![CDATA[
+			where blogid = #{blogid}
+		]]>
+	</update>
+</mapper>

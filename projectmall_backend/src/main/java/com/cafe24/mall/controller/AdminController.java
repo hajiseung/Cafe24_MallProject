@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.mall.dto.JSONResult;
 import com.cafe24.mall.service.AdminService;
+import com.cafe24.mall.vo.AdminVo;
 import com.cafe24.mall.vo.CategoryVo;
 import com.cafe24.mall.vo.ItemVo;
 import com.cafe24.mall.vo.TermVo;
@@ -33,9 +34,17 @@ public class AdminController {
 	private AdminService adminService;
 
 	// 관리자 로그인 페이지
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String adminLogin() {
-		return "login";
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public ResponseEntity<JSONResult> adminLogin(@RequestBody AdminVo vo, BindingResult result) {
+		// 등록 오류시 에러 출력
+		if (result.hasErrors()) {
+			List<ObjectError> list = result.getAllErrors();
+			for (ObjectError error : list) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
+			}
+		}
+		AdminVo adminvo = adminService.login(vo);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(adminvo));
 	}
 
 	// 카테고리 등록
@@ -69,9 +78,18 @@ public class AdminController {
 	// 카테고리 삭제
 	// 카테고리 조회
 	@RequestMapping(value = { "/category/view**", "/category/view/**",
-			"/category/view**/**" }, method = RequestMethod.POST)
-	public ResponseEntity<JSONResult> viewCategory(@RequestBody @Valid CategoryVo categoryVo, BindingResult result) {
-		List<CategoryVo> resultSql = adminService.viewCategory(categoryVo);
+			"/category/view**/**" }, method = RequestMethod.GET)
+	public ResponseEntity<JSONResult> viewCategory() {
+		List<CategoryVo> resultSql = adminService.viewCategory();
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(resultSql));
+	}
+
+	@RequestMapping(value = "/lowcategory", method = RequestMethod.POST)
+	public ResponseEntity<JSONResult> lowCategory(@RequestBody CategoryVo topCategory) {
+		System.out.println("===========================================================================================================");
+		System.out.println(topCategory);
+		System.out.println("===========================================================================================================");
+		List<CategoryVo> resultSql = adminService.lowCategory(topCategory);
 		System.out.println(resultSql);
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(resultSql));
 	}
@@ -123,7 +141,6 @@ public class AdminController {
 	// 물품 정보 수정
 	@RequestMapping(value = "/item/modify", method = RequestMethod.POST)
 	public ResponseEntity<JSONResult> modifyItem(@RequestBody @Valid ItemVo itemVo, BindingResult result) {
-
 		// 수정 에러 출력
 		if (result.hasErrors()) {
 			List<ObjectError> list = result.getAllErrors();
@@ -155,12 +172,12 @@ public class AdminController {
 		return "api/admin/form/memberlist";
 	}
 
-	// 회원 관리
+	// 회원 리스트
 	@ApiOperation(value = "회원 리스트")
 	@RequestMapping(value = "/memberlist", method = RequestMethod.GET)
-	public void memberList() {
+	public ResponseEntity<JSONResult> memberList() {
 		List<UserVo> list = adminService.memberList();
-		System.out.println(list);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(list));
 	}
 
 	// 주문 관리 페이지 호출

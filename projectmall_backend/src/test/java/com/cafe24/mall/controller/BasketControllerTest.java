@@ -48,6 +48,41 @@ public class BasketControllerTest {
 		assertNotNull(basketService);
 	}
 
+	// 바로구매 페이지 이동 테스트
+	@Test
+	public void testImmedaiteBasket() throws Exception {
+		BasketVo vo = new BasketVo();
+		NonUserVo userVo = new NonUserVo();
+		// 회원 장바구니 추가
+		vo.setItem_no(1L);
+		vo.setMember_no(5L);
+		vo.setItem_count(2L);
+		vo.setAccmulate(100);
+		vo.setOption_no(1L);
+		vo.setNonUserVo(userVo);
+
+		ResultActions resultActions = mockMvc.perform(
+				post("/api/basket/immediate").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+
+		resultActions.andExpect(status().isOk()).andDo(print());
+
+		// 비회원 장바구니 추가(처음x)
+		vo = new BasketVo();
+		userVo = new NonUserVo();
+		userVo.setMac_addr("nonmem");
+		vo.setItem_no(1L);
+		vo.setMember_no(0);
+		vo.setItem_count(2L);
+		vo.setAccmulate(100);
+		vo.setOption_no(1L);
+		vo.setNonUserVo(userVo);
+
+		resultActions = mockMvc.perform(
+				post("/api/basket/immediate").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+
+		resultActions.andExpect(status().isOk()).andDo(print());
+	}
+
 	// 장바구니 등록 테스트
 	@Test
 	public void testInsertBaseket() throws Exception {
@@ -55,7 +90,7 @@ public class BasketControllerTest {
 		NonUserVo userVo = new NonUserVo();
 		// 회원 장바구니 추가
 		vo.setItem_no(1L);
-		vo.setMember_no(1L);
+		vo.setMember_no(5L);
 		vo.setItem_count(2L);
 		vo.setAccmulate(100);
 		vo.setOption_no(1L);
@@ -85,7 +120,7 @@ public class BasketControllerTest {
 	@Test
 	public void testDeleteBasket() throws Exception {
 		BasketVo vo = new BasketVo();
-		ResultActions resultActions = mockMvc.perform(get("/api/basket/delete/nomem1/1/2")
+		ResultActions resultActions = mockMvc.perform(get("/api/basket/delete/nomem1/1/3")
 				.contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 
 		resultActions.andExpect(status().isOk()).andDo(print());
@@ -95,8 +130,8 @@ public class BasketControllerTest {
 	@Test
 	public void testBasketList() throws Exception {
 		BasketVo vo = new BasketVo();
-		vo.setMember_no(1);
-		
+		vo.setMember_no(5);
+
 		ResultActions resultActions = mockMvc.perform(
 				post("/api/basket/list").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
 

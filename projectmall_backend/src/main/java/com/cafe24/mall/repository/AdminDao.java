@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cafe24.mall.vo.AdminVo;
 import com.cafe24.mall.vo.CategoryVo;
 import com.cafe24.mall.vo.ItemVo;
 import com.cafe24.mall.vo.TermVo;
@@ -72,10 +73,10 @@ public class AdminDao {
 	// 물품 수정
 	public int modifyItem(ItemVo itemVo) {
 		// title update
-		System.out.println(itemVo);
-		sqlSession.update("admin.updateItem", itemVo);
-
-		return 0;
+		int result = 0;
+		result += sqlSession.update("admin.updateItem", itemVo);
+		result += sqlSession.update("admin.updateItemDetail", itemVo);
+		return result;
 	}
 
 	// 카테고리 등록
@@ -89,8 +90,8 @@ public class AdminDao {
 		return sqlSession.update("admin.modifyCategory", categoryVo);
 	}
 
-	public List<CategoryVo> viewCategory(CategoryVo categoryVo) {
-		return sqlSession.selectList("admin.viewCategory", categoryVo);
+	public List<CategoryVo> viewCategory() {
+		return sqlSession.selectList("admin.viewCategory");
 	}
 
 	public TermVo addTerms(TermVo termVo) {
@@ -109,6 +110,16 @@ public class AdminDao {
 
 	public int modifyTerms(TermVo termVo) {
 		return sqlSession.update("admin.modifyTerms", termVo);
+	}
+
+	public AdminVo login(AdminVo vo) {
+		AdminVo result = sqlSession.selectOne("admin.login", vo);
+		return result;
+	}
+
+	public List<CategoryVo> getLowCategory(CategoryVo topCategory) {
+		List<CategoryVo> list = sqlSession.selectList("admin.getlowcategory", topCategory);
+		return list;
 	}
 
 }

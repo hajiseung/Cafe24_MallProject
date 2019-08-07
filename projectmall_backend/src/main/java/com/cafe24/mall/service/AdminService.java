@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.cafe24.mall.repository.AdminDao;
 import com.cafe24.mall.repository.BasketDao;
+import com.cafe24.mall.vo.AdminVo;
 import com.cafe24.mall.vo.BasketVo;
 import com.cafe24.mall.vo.CategoryVo;
 import com.cafe24.mall.vo.ItemVo;
@@ -68,8 +69,8 @@ public class AdminService {
 		return adminDao.modifyCategory(categoryVo);
 	}
 
-	public List<CategoryVo> viewCategory(CategoryVo categoryVo) {
-		return adminDao.viewCategory(categoryVo);
+	public List<CategoryVo> viewCategory() {
+		return adminDao.viewCategory();
 	}
 
 	public TermVo addTerms(TermVo termVo) {
@@ -86,5 +87,13 @@ public class AdminService {
 
 	public int modifyTerms(TermVo termVo) {
 		return adminDao.modifyTerms(termVo);
+	}
+
+	public AdminVo login(AdminVo vo) {
+		return adminDao.login(vo);
+	}
+
+	public List<CategoryVo> lowCategory(CategoryVo topCategory) {
+		return adminDao.getLowCategory(topCategory);
 	}
 }
