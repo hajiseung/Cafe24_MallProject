@@ -15,6 +15,40 @@
 	<!-- Custom styles for this template -->
 	<link href="${pageContext.servletContext.contextPath }/assets/css/shop-homepage.css" rel="stylesheet">
 </head>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script>
+$(function(){
+	var acc = document.getElementsByClassName("topcategory");
+	var i;
+	var list = [];
+	for (i = 0; i < acc.length; i++) {
+		list.push(acc[i].innerText);
+		acc[i].addEventListener("click", function() {
+			this.classList.toggle("active");
+		 	var panel = this.nextElementSibling;
+			if (panel.style.display === "block") {
+			   panel.style.display = "none";
+			} else {
+			  panel.style.display = "block";
+			}
+		});
+	}
+	var test = list;
+	var tagdata='';	
+	/* $.ajax({
+		url:"${pageContext.servletContext.contextPath }/getlowcategory",
+		data:{"top_category":test},
+		type:"post",
+		success:function(response){
+			$.each(response,function(index,value){
+				tagdata+="<a id='lowcategory['"+index+"]' class='list-group-item topcategory'>"+value+"</a>"
+			})
+			$('#topcategory['+i+']').append(tagdata);
+		}
+	}); */
+});
+
+</script>
 <body>
 	<!-- Navigation -->
 	<c:import url='/WEB-INF/views/includes/navigation.jsp'>
@@ -27,10 +61,18 @@
 
 			<div class="col-lg-3">
 				<h1 class="my-4">PJMall</h1>
+				<h4 class="my-4">카테고리</h4>
 				<div class="list-group">
-					<a href="#" class="list-group-item">Category 1</a> <a href="#"
-						class="list-group-item">Category 2</a> <a href="#"
-						class="list-group-item">Category 3</a>
+					<c:forEach items="${topcategory }" var="topcategory" varStatus="status">
+					<button id="topcategory[${status.index }]" class="accordion list-group-item topcategory">${topcategory }</button>
+						<c:forEach items="${lowcategory}" var="lowcategory" begin="${status.index }" end="${status.index }">
+							<div class="panel">
+							<c:forEach items="${lowcategory }" var="lowcategory" varStatus="data">
+								<a href="#" id="lowcategory[${data.index }]" class="list-group-item topcategory">${lowcategory }</a>
+							</c:forEach>
+							</div>
+						</c:forEach>
+					</c:forEach>
 				</div>
 			</div>
 			<!-- /.col-lg-3 -->

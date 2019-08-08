@@ -61,33 +61,11 @@ public class AdminService {
 		return result.getData();
 	}
 
-//	public AdminVo login(AdminVo vo) throws URISyntaxException {
-//		AdminVo result = (AdminVo) postRestTemplateData("http://localhost:8080/projectmall_backend/api/admin/login",
-//				vo);
-//		return result;
-//	}
-
 	public AdminVo login(String id) throws URISyntaxException {
 		AdminVo vo = new AdminVo();
 		vo.setId(id);
 		AdminVo result = (AdminVo) postRestTemplateData(tmpUrl + "/login", vo);
 		return result;
-	}
-
-	// DTO Class
-	private static class JSONResultAdminVo extends JSONResult<AdminVo> {
-	}
-
-	private static class JSONResultItemVo extends JSONResult<ItemVo> {
-	}
-
-	private static class JSONResultCategoryVo extends JSONResult<CategoryVo> {
-	}
-
-	private static class JSONResultListCategoryVo extends JSONResult<List<CategoryVo>> {
-	}
-
-	private static class JSONResultGoodsList extends JSONResult<String> {
 	}
 
 	public CategoryVo addcategory(CategoryVo vo) throws URISyntaxException {
@@ -131,11 +109,11 @@ public class AdminService {
 		// 사진 이름 설정
 		List<String> photoList = new ArrayList<String>();
 		List<Boolean> is_main = new ArrayList<Boolean>();
-		
+
 		CategoryVo categoryVo = new CategoryVo();
 		categoryVo.setTop_category(itemVo.getTop_category());
 		categoryVo.setLow_category(itemVo.getLow_category());
-		
+
 		int listSize = itemVo.getMultiPartPhoto().size();
 		int is_mainSize = itemVo.getIs_main().size();
 		for (int i = 0; i < listSize; i++) {
@@ -197,6 +175,22 @@ public class AdminService {
 		filename += ("." + extName);
 
 		return filename;
+	}
+
+	// DTO Class
+	private static class JSONResultAdminVo extends JSONResult<AdminVo> {
+	}
+
+	private static class JSONResultItemVo extends JSONResult<ItemVo> {
+	}
+
+	private static class JSONResultCategoryVo extends JSONResult<CategoryVo> {
+	}
+
+	private static class JSONResultListCategoryVo extends JSONResult<List<CategoryVo>> {
+	}
+
+	private static class JSONResultGoodsList extends JSONResult<String> {
 	}
 
 }

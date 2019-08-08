@@ -80,13 +80,13 @@ $(document).ready(function() {
 					</p>
 				</c:if>
 			</spring:hasBindErrors>
-                <select class="item_category"  name="top_category" required>
+                <select class="item_category custom-select" name="top_category" required>
 					<option value="상위 카테고리">상위 카테고리</option>
 				    <c:forEach items="${categoryMap.topcategory }" var="map">
 				    	<option value="${map }">${map }</option>
 				    </c:forEach>
 				</select>
-				<select class="low_category" name="low_category" required>
+				<select class="low_category custom-select" name="low_category" required>
 					<option value="하위 카테고리">하위 카테고리</option>
 				</select>
 				<br>
@@ -109,7 +109,7 @@ $(document).ready(function() {
                 <label for="salestatusFalse">False</label>
                 <input type="radio" id="salestatusFalse" name="salestatus" value="false"><br>
                 
-				<input id="addOption" type="button" value="옵션 추가" />
+				<input id="addOption" type="button" class='btn btn-info' value="옵션 추가" />
 				 <table id="optionview">
 			        <tr>
 			            <td><input type="text" name="name[0]" class="form-control" placeholder="옵션"></td>
@@ -117,7 +117,7 @@ $(document).ready(function() {
 			    </table>  
                 
                 
-				<input id="addFile" type="button" value="파일 추가" />  
+				<input id="addFile" type="button"  class='btn btn-primary' value="파일 추가" />  
                 <table id="fileview">
 			        <tr>
 			            <td><input type="file" name="multiPartPhoto[0]" style="width: 250px;"/></td>
