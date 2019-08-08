@@ -30,6 +30,11 @@ public class UserDao {
 
 	// 유저 로그인
 	public UserVo loginUser(UserVo userVo) {
+		System.out.println("여기까진 들어오냐?");
+		UserVo pwUservo = sqlSession.selectOne("user.pwforlogin", userVo);
+		System.out.println(pwUservo);
+		System.out.println(userVo);
+		System.out.println();
 		return sqlSession.selectOne("user.loginUser", userVo);
 	}
 
@@ -47,5 +52,15 @@ public class UserDao {
 	// 회원 삭제
 	public int deleteUser(UserVo userVo) {
 		return sqlSession.delete("user.delete", userVo);
+	}
+
+	public UserVo getUser(UserVo uservo) {
+		// id 들어있음
+		UserVo result = sqlSession.selectOne("user.getuser", uservo);
+		UserVo pwUservo = sqlSession.selectOne("user.pwforlogin", uservo);
+		if (!pwUservo.getPw().equals(result.getPw())) {
+			return null;
+		}
+		return result;
 	}
 }

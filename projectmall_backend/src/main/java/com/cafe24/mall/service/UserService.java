@@ -42,4 +42,8 @@ public class UserService {
 		return userDao.deleteUser(userVo);
 	}
 
+	public UserVo getUser(UserVo uservo) {
+		return userDao.getUser(uservo);
+	}
+
 }

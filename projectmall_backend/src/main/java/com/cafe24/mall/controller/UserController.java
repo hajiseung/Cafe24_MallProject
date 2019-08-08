@@ -154,11 +154,19 @@ public class UserController {
 			}
 		}
 		int sqlresult = userService.modifyUser(userVo);
-		System.out.println(sqlresult);
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(userVo));
 //		return "redirect:/";
 	}
 
+	@RequestMapping(value = "/getuser", method = RequestMethod.POST)
+	public ResponseEntity<JSONResult> getUser(@RequestBody UserVo uservo){
+		UserVo result = userService.getUser(uservo);
+		if (result == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("로그인에 실패 하였습니다."));
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
+	}
+	
 	// 회원 로그아웃
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {

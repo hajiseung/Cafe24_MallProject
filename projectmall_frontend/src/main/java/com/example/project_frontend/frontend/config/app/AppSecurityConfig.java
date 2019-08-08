@@ -51,24 +51,24 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         
         // FormLoginConfigurer
         
-//        .and()
-//        	.formLogin()
-//        		.loginPage("/user/login")
-//        		.loginProcessingUrl("/user/auth")
-//        		.failureUrl("/user/login")
-//        		.successHandler(authenticationSuccessHandler())
-//        		.usernameParameter("id")
-//        		.passwordParameter("password")
-        		
+        .and()
+        	.formLogin()
+        		.loginPage("/user/login")
+        		.loginProcessingUrl("/user/auth")
+        		.failureUrl("/user/login")
+        		.successHandler(authenticationSuccessHandler())
+        		.usernameParameter("id")
+        		.passwordParameter("pw")
+
 		// FormLoginConfigurer
-		.and()
-			.formLogin()
-				.loginPage("/loginadmin")
-				.loginProcessingUrl("/admin/auth")
-				.failureUrl("/loginadmin")
-				.successHandler(authenticationSuccessHandler())
-				.usernameParameter("id")
-				.passwordParameter("pw")
+//		.and()
+//			.formLogin()
+//				.loginPage("/loginadmin")
+//				.loginProcessingUrl("/admin/auth")
+//				.failureUrl("/loginadmin")
+//				.successHandler(authenticationSuccessHandler())
+//				.usernameParameter("id")
+//				.passwordParameter("pw")
         
         // LogoutConfigurer
         .and()

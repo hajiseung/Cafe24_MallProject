@@ -103,7 +103,6 @@
 					</c:otherwise>				
 				</c:choose>
 			</sec:authorize>
-			
 			<sec:authorize access="isAnonymous()">
 				<c:choose>
 					<c:when test='${param.active == "login" }'>
@@ -119,9 +118,6 @@
 						<li class="nav-item">
 							<a class="nav-link" href="${pageContext.servletContext.contextPath }/cs">고객센터</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/loginadmin">관리자 로그인</a>
-						</li>
 					</c:when>
 					<c:when test='${param.active == "join" }'>
 						<li class="nav-item">
@@ -136,9 +132,7 @@
 						<li class="nav-item">
 							<a class="nav-link" href="${pageContext.servletContext.contextPath }/cs">고객센터</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/loginadmin">관리자 로그인</a>
-						</li>
+						
 					</c:when>
 					
 					<c:when test='${param.active == "cs" }'>
@@ -154,9 +148,7 @@
 						<li class="nav-item active">
 							<a class="nav-link" href="${pageContext.servletContext.contextPath }/cs">고객센터<span class="sr-only">(current)</span></a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/loginadmin">관리자 로그인</a>
-						</li>
+						
 					</c:when>		
 								
 					<c:when test='${param.active == "loginadmin" }'>
@@ -172,9 +164,7 @@
 						<li class="nav-item">
 							<a class="nav-link" href="${pageContext.servletContext.contextPath }/cs">고객센터</a>
 						</li>
-						<li class="nav-item active">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/loginadmin">관리자 로그인<span class="sr-only">(current)</span></a>
-						</li>
+						
 					</c:when>
 									
 					<c:otherwise>
@@ -190,12 +180,10 @@
 						<li class="nav-item">
 							<a class="nav-link" href="${pageContext.servletContext.contextPath }/cs">고객센터</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/loginadmin">관리자 로그인</a>
-						</li>
+						
 					</c:otherwise>				
 				</c:choose>
-			</sec:authorize>
+				</sec:authorize>
 			</ul>
 		</div>
 	</div>

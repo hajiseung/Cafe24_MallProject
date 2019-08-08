@@ -22,8 +22,8 @@ public class UserVo {
 	private String email;
 
 	@NotEmpty
-	@Pattern(regexp = "(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{6,20}", message = "비밀번호는 6자 이상 20자 이하의 알파벳, 숫자, 특수문자를 조합하여 작성해야 합니다.")
-	@Length(min = 6, max = 20, message = "비밀번호 4자 이상 20자 이하")
+//	@Pattern(regexp = "(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{6,20}", message = "비밀번호는 6자 이상 20자 이하의 알파벳, 숫자, 특수문자를 조합하여 작성해야 합니다.")
+//	@Length(min = 6, max = 20, message = "비밀번호 4자 이상 20자 이하")
 	private String pw;
 
 	@NotEmpty
@@ -44,7 +44,8 @@ public class UserVo {
 	private int saving; // 적립금
 	private String birthday;
 	private int massive_mount; // 누적금액
-	private MemberEnum grade;
+	private String grade;
+	private MemberEnum grade2;
 	private boolean email_recv;
 	private boolean sms_recv;
 	private int purchase_cnt;
@@ -106,8 +107,12 @@ public class UserVo {
 		return massive_mount;
 	}
 
-	public MemberEnum getGrade() {
+	public String getGrade() {
 		return grade;
+	}
+
+	public MemberEnum getGrade2() {
+		return grade2;
 	}
 
 	public boolean isEmail_recv() {
@@ -126,8 +131,8 @@ public class UserVo {
 		return islogin;
 	}
 
-	public void setNo(long l) {
-		this.no = l;
+	public void setNo(long no) {
+		this.no = no;
 	}
 
 	public void setId(String id) {
@@ -182,8 +187,12 @@ public class UserVo {
 		this.massive_mount = massive_mount;
 	}
 
-	public void setGrade(MemberEnum grade) {
+	public void setGrade(String grade) {
 		this.grade = grade;
+	}
+
+	public void setGrade2(MemberEnum grade2) {
+		this.grade2 = grade2;
 	}
 
 	public void setEmail_recv(boolean email_recv) {
@@ -207,8 +216,8 @@ public class UserVo {
 		return "UserVo [no=" + no + ", id=" + id + ", email=" + email + ", pw=" + pw + ", name=" + name + ", nickname="
 				+ nickname + ", tell_ph=" + tell_ph + ", cell_ph=" + cell_ph + ", join_date=" + join_date + ", addr="
 				+ addr + ", point=" + point + ", saving=" + saving + ", birthday=" + birthday + ", massive_mount="
-				+ massive_mount + ", grade=" + grade + ", email_recv=" + email_recv + ", sms_recv=" + sms_recv
-				+ ", purchase_cnt=" + purchase_cnt + ", islogin=" + islogin + "]";
+				+ massive_mount + ", grade=" + grade + ", grade2=" + grade2 + ", email_recv=" + email_recv
+				+ ", sms_recv=" + sms_recv + ", purchase_cnt=" + purchase_cnt + ", islogin=" + islogin + "]";
 	}
 
 }

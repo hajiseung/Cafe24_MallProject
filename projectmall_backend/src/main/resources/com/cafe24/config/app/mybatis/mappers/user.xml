@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="user">
-
+<!-- HEX(AES_ENCRYPT(#{pw}, SHA2('password',512))) -->
 	<!-- 회원가입 -->
 	<insert id="insert" parameterType="uservo">
 	<![CDATA[
 			insert into member 
-			values(null, #{id}, #{email}, HEX(AES_ENCRYPT(#{pw}, SHA2('password',512))), #{name}, #{nickname}, #{addr} ,#{tell_ph}, #{cell_ph}, now(), 100, 0, #{birthday}, 0, 1, #{email_recv}, #{sms_recv}, 0, false)
+			values(null, #{id}, #{email}, #{pw}, #{name}, #{nickname}, #{addr} ,#{tell_ph}, #{cell_ph}, now(), 100, 0, #{birthday}, 0, 1, #{email_recv}, #{sms_recv}, 0, false)
 		]]>
 		<!-- 넘어오는 uservo에 no를 셋팅해준다. -->
 		<selectKey keyProperty="no" resultType="long" order="AFTER">
@@ -38,11 +38,23 @@
 		]]>
 	</select>
 
+	<select id="getuser" parameterType="uservo" resultType="uservo">
+	<![CDATA[
+			select * from member where id=#{id}
+	]]>
+	</select>
+
+	<select id="pwforlogin" parameterType="uservo"
+		resultType="uservo">
+	<![CDATA[
+		select pw from member where id=#{id};
+	]]>
+	</select>
 	<!-- UserLogin -->
 	<select id="loginUser" parameterType="uservo"
 		resultType="uservo">
 	<![CDATA[
-		select no from member where id=#{id} and pw=#{pw}
+		select no from member where id=#{id} and pw=HEX(AES_ENCRYPT(#{pw}, SHA2('password',512)))
 	]]>
 	</select>
 
