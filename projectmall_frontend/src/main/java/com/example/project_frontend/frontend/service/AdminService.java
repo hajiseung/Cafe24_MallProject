@@ -22,6 +22,7 @@ import com.example.project_frontend.frontend.dto.JSONResult;
 import com.example.project_frontend.frontend.vo.AdminVo;
 import com.example.project_frontend.frontend.vo.CategoryVo;
 import com.example.project_frontend.frontend.vo.ItemVo;
+import com.example.project_frontend.frontend.vo.UserVo;
 
 @Service
 public class AdminService {
@@ -140,6 +141,13 @@ public class AdminService {
 		JSONResult<ItemVo> jsonReultItem = restTemplate.postForObject(requestUri, itemVo, JSONResultItemVo.class);
 	}
 
+	public List<UserVo> getMemberList() throws URISyntaxException {
+		RestTemplate restTemplate = new RestTemplate();
+		URI requestUri = new URI(tmpUrl + "/memberlist");
+		JSONResult<List<UserVo>> jsonReultItem = restTemplate.getForObject(requestUri, JSONResultUserVo.class);
+		return jsonReultItem.getData();
+	}
+
 	public String restore(MultipartFile itemVo) {
 		String url = "";
 		MultipartFile multipartFile = itemVo;
@@ -179,6 +187,9 @@ public class AdminService {
 
 	// DTO Class
 	private static class JSONResultAdminVo extends JSONResult<AdminVo> {
+	}
+
+	private static class JSONResultUserVo extends JSONResult<List<UserVo>> {
 	}
 
 	private static class JSONResultItemVo extends JSONResult<ItemVo> {

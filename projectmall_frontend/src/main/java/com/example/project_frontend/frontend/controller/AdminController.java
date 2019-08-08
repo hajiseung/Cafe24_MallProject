@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.example.project_frontend.frontend.service.AdminService;
 import com.example.project_frontend.frontend.vo.CategoryVo;
 import com.example.project_frontend.frontend.vo.ItemVo;
+import com.example.project_frontend.frontend.vo.UserVo;
 
 @Controller
 public class AdminController {
@@ -67,12 +67,20 @@ public class AdminController {
 	}
 
 	@PostMapping("/additem")
-	public String addItem(@ModelAttribute @Valid ItemVo itemVo, BindingResult result, Model model) throws URISyntaxException {
+	public String addItem(@ModelAttribute @Valid ItemVo itemVo, BindingResult result, Model model)
+			throws URISyntaxException {
 		if (result.hasErrors()) {
 			model.addAllAttributes(result.getModel());
 			return "admin/additem";
 		}
 		service.additem(itemVo);
 		return "redirect:/";
+	}
+
+	@GetMapping("/memberlist")
+	public String memberlistForm(Model model) throws URISyntaxException {
+		List<UserVo> result = service.getMemberList();
+		model.addAttribute("userVo", result);
+		return "admin/memberlist";
 	}
 }

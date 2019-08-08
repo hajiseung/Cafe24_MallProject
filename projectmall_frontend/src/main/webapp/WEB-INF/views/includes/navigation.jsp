@@ -30,6 +30,10 @@
 						</li>
 						
 						<li class="nav-item">
+							<a class="nav-link" href="${pageContext.servletContext.contextPath }/memberlist">회원 리스트</a>
+						</li>
+						
+						<li class="nav-item">
 							<a class="nav-link" href="${pageContext.servletContext.contextPath }/admin/logout">로그아웃</a>
 						</li>
 					</c:when>		
@@ -44,6 +48,10 @@
 						
 						<li class="nav-item active">
 							<a class="nav-link" href="${pageContext.servletContext.contextPath }/additem">물품 등록<span class="sr-only">(current)</span></a>
+						</li>
+						
+						<li class="nav-item">
+							<a class="nav-link" href="${pageContext.servletContext.contextPath }/memberlist">회원 리스트</a>
 						</li>
 						
 						<li class="nav-item">
@@ -62,6 +70,11 @@
 						<li class="nav-item">
 							<a class="nav-link" href="${pageContext.servletContext.contextPath }/additem">물품 등록</a>
 						</li>
+						
+						<li class="nav-item">
+							<a class="nav-link" href="${pageContext.servletContext.contextPath }/memberlist">회원 리스트</a>
+						</li>
+						
 						<li class="nav-item">
 							<a class="nav-link" href="${pageContext.servletContext.contextPath }/admin/logout">로그아웃</a>
 						</li>

@@ -95,7 +95,7 @@
 
 	<select id="getUserList" resultType="uservo">
 	<![CDATA[
-		select no, id, email, name, nickname, addr, tell_ph, cell_ph, join_date, point, saving, bitrhday, massive_mount, upper(grade), email_recv, sms_recv, purchase_cnt from member limit 0,10
+		select no, id, email, name, nickname, addr, tell_ph, cell_ph, join_date, point, saving, bitrhday, massive_mount, grade, email_recv, sms_recv, purchase_cnt from member
 	]]>
 	</select>
 

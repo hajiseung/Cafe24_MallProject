@@ -33,19 +33,6 @@ $(function(){
 			}
 		});
 	}
-	var test = list;
-	var tagdata='';	
-	/* $.ajax({
-		url:"${pageContext.servletContext.contextPath }/getlowcategory",
-		data:{"top_category":test},
-		type:"post",
-		success:function(response){
-			$.each(response,function(index,value){
-				tagdata+="<a id='lowcategory['"+index+"]' class='list-group-item topcategory'>"+value+"</a>"
-			})
-			$('#topcategory['+i+']').append(tagdata);
-		}
-	}); */
 });
 
 </script>
