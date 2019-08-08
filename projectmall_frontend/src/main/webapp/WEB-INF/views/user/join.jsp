@@ -18,28 +18,35 @@
 <body>
 	<!-- Navigation -->
 	<c:import url='/WEB-INF/views/includes/navigation.jsp'>
-		<c:param name="active" value="login" />
+		<c:param name="active" value="join" />
 	</c:import>
 	<!-- /.Navigation -->
 
  	<div class="container">
  		<div class="card card-container">
-        	<img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
-            <p id="profile-name" class="profile-name-card"></p>
-            <form method="post" action="login" class="form-signin" name="loginForm">
-                <span id="reauth-email" class="reauth-email"></span>
-                <input type="email" id="inputEmail" class="form-control" placeholder="이메일" name="username" required autofocus>
-                <input type="password" id="inputPassword" class="form-control" placeholder="비밀번호" name="password" required>
-                <div id="remember" class="checkbox">
-                    <label>
-                        <input type="checkbox" value="remember-me"> 자동 로그인
-                    </label>
-                </div>
-                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">로그인</button>
+            <form method="post" action="join" class="form-signin" name="joinForm">
+                <input type="text" class="form-control" placeholder="아이디" name="id" required autofocus>
+                <input type="email" id="inputEmail" class="form-control" placeholder="이메일" name="email" required>
+                <input type="password" id="inputPassword" class="form-control" placeholder="비밀번호" name="pw" required>
+                <input type="text" class="form-control" placeholder="이름" name="name" required>
+                <input type="text" class="form-control" placeholder="별명" name="nickname" required>
+                <input type="text" class="form-control" placeholder="전화번호(-포함)" name="tell_ph" required>
+                <input type="text" class="form-control" placeholder="핸드폰번호(-포함)" name="cell_ph" required>
+                <input type="text" class="form-control" placeholder="주소" name="addr" required>
+                생일
+                <input type="date" class="form-control" placeholder="생일" name="birthday" required>
+                이메일 수신
+                <label for="email_recvTrue">Ture</label>
+                <input type="radio" id="email_recvTrue" name="email_recv">
+                <label for="email_recvFalse">False</label>
+                <input type="radio" id="email_recvFalse" name="email_recv"><br>
+                문자 수신
+                <label for="sms_recvTrue">Ture</label>
+                <input type="radio" id="sms_recvTrue"  name="sms_recv">
+                <label for="sms_recvFalse">False</label>
+                <input type="radio" id="sms_recvFalse" name="sms_recv"><br>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">회원 가입</button>
             </form><!-- /form -->
-            <a href="javascript:loginForm.submit();" class="forgot-password">
-                비밀번호를 잊으셨습니까?
-            </a>
         </div>
         <!-- /.card-container -->
 	</div>

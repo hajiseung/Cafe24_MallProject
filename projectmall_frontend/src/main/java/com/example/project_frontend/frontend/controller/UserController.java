@@ -37,5 +37,9 @@ public class UserController {
 //		System.out.println("========================================================");
 		return "user/login";
 	}
-	
+
+	@GetMapping(value = "/join")
+	public String joinform() {
+		return "user/join";
+	}
 }

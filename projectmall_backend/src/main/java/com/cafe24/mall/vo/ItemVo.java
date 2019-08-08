@@ -40,10 +40,10 @@ public class ItemVo {
 	private List<String> name;
 
 	// item_category
-//	@NotNull
-//	private String top_category;
-//	@NotNull
-//	private String low_category;
+	@NotNull
+	private String top_category;
+	@NotNull
+	private String low_category;
 	private CategoryVo categoryVo;
 
 	private BasketVo basketVo;
@@ -110,6 +110,14 @@ public class ItemVo {
 
 	public List<String> getName() {
 		return name;
+	}
+
+	public String getTop_category() {
+		return top_category;
+	}
+
+	public String getLow_category() {
+		return low_category;
 	}
 
 	public CategoryVo getCategoryVo() {
@@ -184,6 +192,14 @@ public class ItemVo {
 		this.name = name;
 	}
 
+	public void setTop_category(String top_category) {
+		this.top_category = top_category;
+	}
+
+	public void setLow_category(String low_category) {
+		this.low_category = low_category;
+	}
+
 	public void setCategoryVo(CategoryVo categoryVo) {
 		this.categoryVo = categoryVo;
 	}
@@ -198,8 +214,8 @@ public class ItemVo {
 				+ ", item_detail_no=" + item_detail_no + ", amount=" + amount + ", available_amount=" + available_amount
 				+ ", price=" + price + ", non_amount=" + non_amount + ", displaystatus=" + displaystatus
 				+ ", salestatus=" + salestatus + ", reg_date=" + reg_date + ", multiPartPhoto=" + multiPartPhoto
-				+ ", photo=" + photo + ", is_main=" + is_main + ", name=" + name + ", categoryVo=" + categoryVo
-				+ ", basketVo=" + basketVo + "]";
+				+ ", photo=" + photo + ", is_main=" + is_main + ", name=" + name + ", top_category=" + top_category
+				+ ", low_category=" + low_category + ", categoryVo=" + categoryVo + ", basketVo=" + basketVo + "]";
 	}
 
 }

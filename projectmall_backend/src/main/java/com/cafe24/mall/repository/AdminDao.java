@@ -122,4 +122,11 @@ public class AdminDao {
 		return list;
 	}
 
+	public CategoryVo getCategoryNo(ItemVo itemVo) {
+		ItemVo itemVo2 = sqlSession.selectOne("admin.getcategoryno", itemVo);
+		CategoryVo vo = new CategoryVo();
+		vo.setNo(itemVo2.getCategory_no());
+		return vo;
+	}
+
 }

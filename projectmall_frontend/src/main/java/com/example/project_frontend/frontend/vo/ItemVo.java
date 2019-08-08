@@ -24,7 +24,7 @@ public class ItemVo {
 	private long available_amount;
 
 	@NotNull
-	private long price;
+	private Long price;
 	@NotNull
 	private boolean non_amount;
 	@NotNull
@@ -42,10 +42,6 @@ public class ItemVo {
 	private List<String> name;
 
 	// item_category
-//	@NotNull
-//	private String top_category;
-//	@NotNull
-//	private String low_category;
 	private CategoryVo categoryVo;
 
 	private BasketVo basketVo;
@@ -86,7 +82,7 @@ public class ItemVo {
 		return available_amount;
 	}
 
-	public long getPrice() {
+	public Long getPrice() {
 		return price;
 	}
 
@@ -166,7 +162,7 @@ public class ItemVo {
 		this.available_amount = available_amount;
 	}
 
-	public void setPrice(long price) {
+	public void setPrice(Long price) {
 		this.price = price;
 	}
 

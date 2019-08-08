@@ -9,7 +9,7 @@
 		select * from admin where id = #{id}
 	]]>
 	</select>
-	
+
 	<!-- 카테고리 등록 - -->
 	<insert id="addCategory" parameterType="categoryvo">
 		<![CDATA[
@@ -21,6 +21,13 @@
 		]]>
 		</selectKey>
 	</insert>
+	
+	<!-- 카테고리 번호 조회 -->
+	<select id="getcategoryno" parameterType="itemvo" resultType="itemvo">
+	<![CDATA[
+		select no as category_no from item_category where top_category=#{top_category} and low_category=#{low_category}
+	]]>
+	</select>
 	
 	<!-- 카테고리 수정 -->
 	<update id="modifyCategory">
@@ -36,15 +43,15 @@
 	]]>
 	</select>
 
-	<select id="getlowcategory" parameterType="categoryvo" resultType="categoryvo">
+	<select id="getlowcategory" parameterType="categoryvo"
+		resultType="categoryvo">
 	<![CDATA[
 		select low_category from item_category where top_category=#{top_category}
 	]]>
 	</select>
 
 	<!-- 카테고리 no 받아오기 -->
-	<select id="getCategoryNo" parameterType="categoryvo"
-		resultType="categoryvo">
+	<select id="getCategoryNo" parameterType="categoryvo" resultType="categoryvo">
 	<![CDATA[
 		select no from item_category where top_category=#{top_category} and low_category=#{low_category}
 	]]>

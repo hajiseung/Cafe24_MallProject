@@ -1,8 +1,12 @@
 package com.example.project_frontend.frontend.service;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -12,13 +16,17 @@ import java.util.TreeSet;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.project_frontend.frontend.dto.JSONResult;
 import com.example.project_frontend.frontend.vo.AdminVo;
 import com.example.project_frontend.frontend.vo.CategoryVo;
+import com.example.project_frontend.frontend.vo.ItemVo;
 
 @Service
 public class AdminService {
+	private static final String SAVE_PATH = "/project-frontend";
+	private static final String URL = "/images";
 	private String tmpUrl = "http://localhost:8080/projectmall_backend/api/admin";
 
 	// get 방식
@@ -70,6 +78,9 @@ public class AdminService {
 	private static class JSONResultAdminVo extends JSONResult<AdminVo> {
 	}
 
+	private static class JSONResultItemVo extends JSONResult<ItemVo> {
+	}
+
 	private static class JSONResultCategoryVo extends JSONResult<CategoryVo> {
 	}
 
@@ -111,7 +122,81 @@ public class AdminService {
 		for (int i = 0; i < result.size(); i++) {
 			lowcategory.add(result.get(i).getLow_category());
 		}
+
 		return lowcategory;
+	}
+
+	// 물품 등록
+	public void additem(ItemVo itemVo) throws URISyntaxException {
+		// 사진 이름 설정
+		List<String> photoList = new ArrayList<String>();
+		List<Boolean> is_main = new ArrayList<Boolean>();
+		
+		CategoryVo categoryVo = new CategoryVo();
+		categoryVo.setTop_category(itemVo.getTop_category());
+		categoryVo.setLow_category(itemVo.getLow_category());
+		
+		int listSize = itemVo.getMultiPartPhoto().size();
+		int is_mainSize = itemVo.getIs_main().size();
+		for (int i = 0; i < listSize; i++) {
+			photoList.add(restore(itemVo.getMultiPartPhoto().get(i)));
+			if (i != is_mainSize - 1) {
+				is_main.add(false);
+			} else {
+				is_main.add(true);
+			}
+		}
+
+		itemVo.setCategoryVo(categoryVo);
+		itemVo.setPhoto(photoList);
+		itemVo.setIs_main(is_main);
+		itemVo.setMultiPartPhoto(null);
+		// 카테고리 넘버 가져오기
+//		RestTemplate restTemplate = new RestTemplate();
+//		URI requestUri = new URI(tmpUrl + "/getcategoryno");
+//		JSONResult<CategoryVo> jsonResult = restTemplate.postForObject(requestUri, itemVo, JSONResultCategoryVo.class);
+//		itemVo.setCategory_no(jsonResult.getData().getNo());
+//		
+		RestTemplate restTemplate = new RestTemplate();
+		URI requestUri = new URI(tmpUrl + "/item/add");
+		JSONResult<ItemVo> jsonReultItem = restTemplate.postForObject(requestUri, itemVo, JSONResultItemVo.class);
+	}
+
+	public String restore(MultipartFile itemVo) {
+		String url = "";
+		MultipartFile multipartFile = itemVo;
+		try {
+			if (multipartFile.isEmpty()) {
+				return url;
+			}
+			String originalFilename = multipartFile.getOriginalFilename();
+			String extName = originalFilename.substring(originalFilename.lastIndexOf('.') + 1);
+			String saveFileName = generateSaveFileName(extName);
+			long fileSize = multipartFile.getSize();
+
+			byte[] fileData = multipartFile.getBytes();
+			OutputStream os = new FileOutputStream(SAVE_PATH + "/" + saveFileName);
+			os.write(fileData);
+			os.close();
+			url = URL + "/" + saveFileName;
+		} catch (IOException e) {
+			throw new RuntimeException("Fileupload error:" + e);
+		}
+		return url;
+	}
+
+	private String generateSaveFileName(String extName) {
+		String filename = "";
+		Calendar calendar = Calendar.getInstance();
+		filename += calendar.get(Calendar.YEAR);
+		filename += calendar.get(Calendar.MONTH);
+		filename += calendar.get(Calendar.DATE);
+		filename += calendar.get(Calendar.HOUR);
+		filename += calendar.get(Calendar.SECOND);
+		filename += calendar.get(Calendar.MILLISECOND);
+		filename += ("." + extName);
+
+		return filename;
 	}
 
 }

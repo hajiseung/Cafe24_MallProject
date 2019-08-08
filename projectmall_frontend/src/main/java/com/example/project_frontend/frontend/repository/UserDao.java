@@ -2,7 +2,7 @@ package com.example.project_frontend.frontend.repository;
 
 import org.springframework.stereotype.Repository;
 
-import com.example.project_frontend.frontend.vo.UserVo;
+import com.example.project_frontend.frontend.vo.UserVo2;
 
 
 @Repository
@@ -11,23 +11,23 @@ public class UserDao {
 //	@Autowired
 //	private SqlSession sqlSession;
 	
-	public UserVo get(String email) {
+	public UserVo2 get(String email) {
 		return null;
 	}
 	
-	public UserVo get(Long no){
+	public UserVo2 get(Long no){
 		return null;
 	}
 	
-	public UserVo get(String email, String password) {
+	public UserVo2 get(String email, String password) {
 		return null;
 	}	
 	
-	public Boolean insert(UserVo vo) {
+	public Boolean insert(UserVo2 vo) {
 		return false;
 	}
 	
-	public int update( UserVo userVo ) {
+	public int update( UserVo2 userVo ) {
 		return 0;
 	}	
 }

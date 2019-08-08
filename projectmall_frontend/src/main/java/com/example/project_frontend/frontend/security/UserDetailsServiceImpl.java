@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import com.example.project_frontend.frontend.repository.UserDao;
 import com.example.project_frontend.frontend.service.AdminService;
 import com.example.project_frontend.frontend.vo.AdminVo;
-import com.example.project_frontend.frontend.vo.UserVo;
+import com.example.project_frontend.frontend.vo.UserVo2;
 
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -26,7 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
 		AdminVo adminVo = null;
-		UserVo userVo = null;
+		UserVo2 userVo = null;
 		if ("admin".equals(id)) {
 			try {
 				adminVo = service.login(id);

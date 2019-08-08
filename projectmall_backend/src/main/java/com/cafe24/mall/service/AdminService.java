@@ -96,4 +96,8 @@ public class AdminService {
 	public List<CategoryVo> lowCategory(CategoryVo topCategory) {
 		return adminDao.getLowCategory(topCategory);
 	}
+
+	public CategoryVo getCategoryNo(ItemVo itemVo) {
+		return adminDao.getCategoryNo(itemVo);
+	}
 }

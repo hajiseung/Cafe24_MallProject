@@ -1,16 +1,21 @@
 package com.example.project_frontend.frontend.controller;
 
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.project_frontend.frontend.service.AdminService;
 import com.example.project_frontend.frontend.vo.CategoryVo;
@@ -62,10 +67,12 @@ public class AdminController {
 	}
 
 	@PostMapping("/additem")
-	public String addItem(@ModelAttribute ItemVo itemVo) {
-		System.out.println("////////////////////////////////////////////");
-		System.out.println(itemVo);
-		System.out.println("////////////////////////////////////////////");
-		return null;
+	public String addItem(@ModelAttribute @Valid ItemVo itemVo, BindingResult result, Model model) throws URISyntaxException {
+		if (result.hasErrors()) {
+			model.addAllAttributes(result.getModel());
+			return "admin/additem";
+		}
+		service.additem(itemVo);
+		return "redirect:/";
 	}
 }

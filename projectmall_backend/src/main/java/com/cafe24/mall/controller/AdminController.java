@@ -84,11 +84,21 @@ public class AdminController {
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(resultSql));
 	}
 
+	// 카테고리 no 가져오기
+	@RequestMapping(value = "/getcategoryno", method = RequestMethod.POST)
+	public ResponseEntity<JSONResult> getCategoryNo(@RequestBody ItemVo itemVo) {
+		CategoryVo vo = adminService.getCategoryNo(itemVo);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(vo));
+	}
+
+	// low카테고리 조회
 	@RequestMapping(value = "/lowcategory", method = RequestMethod.POST)
 	public ResponseEntity<JSONResult> lowCategory(@RequestBody CategoryVo topCategory) {
-		System.out.println("===========================================================================================================");
+		System.out.println(
+				"===========================================================================================================");
 		System.out.println(topCategory);
-		System.out.println("===========================================================================================================");
+		System.out.println(
+				"===========================================================================================================");
 		List<CategoryVo> resultSql = adminService.lowCategory(topCategory);
 		System.out.println(resultSql);
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(resultSql));
