@@ -100,4 +100,12 @@ public class AdminService {
 	public CategoryVo getCategoryNo(ItemVo itemVo) {
 		return adminDao.getCategoryNo(itemVo);
 	}
+
+	public List<ItemVo> listItem() {
+		return adminDao.getItemList();
+	}
+
+	public ItemVo getItem(ItemVo itemVo) {
+		return adminDao.getItem(itemVo);
+	}
 }

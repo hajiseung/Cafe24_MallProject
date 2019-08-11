@@ -21,14 +21,15 @@
 		]]>
 		</selectKey>
 	</insert>
-	
+
 	<!-- 카테고리 번호 조회 -->
-	<select id="getcategoryno" parameterType="itemvo" resultType="itemvo">
+	<select id="getcategoryno" parameterType="itemvo"
+		resultType="itemvo">
 	<![CDATA[
 		select no as category_no from item_category where top_category=#{top_category} and low_category=#{low_category}
 	]]>
 	</select>
-	
+
 	<!-- 카테고리 수정 -->
 	<update id="modifyCategory">
 	<![CDATA[
@@ -51,7 +52,8 @@
 	</select>
 
 	<!-- 카테고리 no 받아오기 -->
-	<select id="getCategoryNo" parameterType="categoryvo" resultType="categoryvo">
+	<select id="getCategoryNo" parameterType="categoryvo"
+		resultType="categoryvo">
 	<![CDATA[
 		select no from item_category where top_category=#{top_category} and low_category=#{low_category}
 	]]>
@@ -181,4 +183,20 @@
 		DELETE FROM terms where no=#{no}
 	]]>
 	</delete>
+
+	<select id="itemlist" resultType="itemvo">
+	<![CDATA[
+		select a.no, a.title, a.desc_html, b.amount, b.price, c.photo as main_photo
+		from item a, item_detail b, item_photo c
+		where a.no=b.item_no and b.item_no=c.item_no and c.is_main=1
+	]]>
+	</select>
+	
+	<select id="getitem" parameterType="itemvo" resultType="itemvo">
+	<![CDATA[
+		select a.no, a.title, a.desc_html, b.amount, b.price, c.photo as main_photo
+		from item a, item_detail b, item_photo c
+		where a.no=#{no} and a.no=b.item_no and b.item_no=c.item_no and c.is_main=1 
+	]]>
+	</select>
 </mapper>

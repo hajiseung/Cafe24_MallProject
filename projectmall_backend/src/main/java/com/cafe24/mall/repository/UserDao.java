@@ -63,4 +63,9 @@ public class UserDao {
 		}
 		return result;
 	}
+
+	public UserVo getUserOne(UserVo uservo) {
+		UserVo userno = sqlSession.selectOne("user.getuserone",uservo);
+		return userno;
+	}
 }

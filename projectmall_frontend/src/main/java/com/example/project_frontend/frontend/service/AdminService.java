@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.project_frontend.frontend.dto.JSONResult;
 import com.example.project_frontend.frontend.vo.AdminVo;
+import com.example.project_frontend.frontend.vo.BasketVo;
 import com.example.project_frontend.frontend.vo.CategoryVo;
 import com.example.project_frontend.frontend.vo.ItemVo;
 import com.example.project_frontend.frontend.vo.UserVo;
@@ -148,6 +149,43 @@ public class AdminService {
 		return jsonReultItem.getData();
 	}
 
+	public List<ItemVo> itemList() throws URISyntaxException {
+		RestTemplate restTemplate = new RestTemplate();
+		URI requestUri = new URI(tmpUrl + "/item/list");
+		JSONResult<List<ItemVo>> jsonReultItem = restTemplate.getForObject(requestUri, JSONResultItemVoList.class);
+		return jsonReultItem.getData();
+	}
+
+	public ItemVo getItem(ItemVo itemNo) throws URISyntaxException {
+		RestTemplate restTemplate = new RestTemplate();
+		URI requestUri = new URI(tmpUrl + "/item/get");
+		JSONResult<ItemVo> jsonReultItem = restTemplate.postForObject(requestUri, itemNo, JSONResultItemVo.class);
+		System.out.println();
+		System.out.println(jsonReultItem.getData());
+		System.out.println();
+		return jsonReultItem.getData();
+	}
+
+	public UserVo getuser(UserVo vo, long no) throws URISyntaxException {
+		BasketVo basketVo = new BasketVo();
+		basketVo.setItem_count(1L);
+		basketVo.setItem_no(no);
+		basketVo.setOption_no(5L);
+		
+		RestTemplate restTemplate = new RestTemplate();
+		URI requestUri = new URI("http://localhost:8080/projectmall_backend/api/user/getuserone");
+		JSONResult<UserVo> jsonReultItem = restTemplate.postForObject(requestUri, vo, JSONResultUserVoOne.class);
+		basketVo.setMember_no(jsonReultItem.getData().getNo());
+		
+		requestUri = new URI("http://localhost:8080/projectmall_backend/api/basket/add");
+		JSONResult<BasketVo> jsonReultItem2 = restTemplate.postForObject(requestUri, basketVo, JSONResultBasketVo.class);
+		System.out.println();
+		System.out.println(jsonReultItem2);
+		System.out.println();
+		return jsonReultItem.getData();
+
+	}
+
 	public String restore(MultipartFile itemVo) {
 		String url = "";
 		MultipartFile multipartFile = itemVo;
@@ -192,10 +230,19 @@ public class AdminService {
 	private static class JSONResultUserVo extends JSONResult<List<UserVo>> {
 	}
 
+	private static class JSONResultUserVoOne extends JSONResult<UserVo> {
+	}
+
 	private static class JSONResultItemVo extends JSONResult<ItemVo> {
 	}
 
+	private static class JSONResultItemVoList extends JSONResult<List<ItemVo>> {
+	}
+
 	private static class JSONResultCategoryVo extends JSONResult<CategoryVo> {
+	}
+
+	private static class JSONResultBasketVo extends JSONResult<BasketVo> {
 	}
 
 	private static class JSONResultListCategoryVo extends JSONResult<List<CategoryVo>> {

@@ -134,6 +134,32 @@ public class AdminController {
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(vo));
 	}
 
+	@RequestMapping(value = "/item/get", method = RequestMethod.POST)
+	public ResponseEntity<JSONResult> getItem(@RequestBody ItemVo itemVo, BindingResult result) {
+		if (result.hasErrors()) {
+			List<ObjectError> list = result.getAllErrors();
+			for (ObjectError error : list) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
+			}
+		}
+		ItemVo vo = adminService.getItem(itemVo);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(vo));
+	}
+
+	// 아이템 리스트
+	@RequestMapping(value = "/item/list", method = RequestMethod.GET)
+	public ResponseEntity<JSONResult> listItem() {
+		// 에러 출력
+//		if (result.hasErrors()) {
+//			List<ObjectError> list = result.getAllErrors();
+//			for (ObjectError error : list) {
+//				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
+//			}
+//		}
+		List<ItemVo> resultSql = adminService.listItem();
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(resultSql));
+	}
+
 	// 판매 상태 API
 	@RequestMapping(value = "/item/status", method = RequestMethod.POST)
 	public ResponseEntity<JSONResult> statusItem(@RequestBody ItemVo itemVo, BindingResult result) {

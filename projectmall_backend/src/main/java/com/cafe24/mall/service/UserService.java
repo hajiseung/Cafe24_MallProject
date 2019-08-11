@@ -46,4 +46,8 @@ public class UserService {
 		return userDao.getUser(uservo);
 	}
 
+	public UserVo getUserOne(UserVo uservo) {
+		return userDao.getUserOne(uservo);
+	}
+
 }

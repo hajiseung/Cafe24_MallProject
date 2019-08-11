@@ -1,6 +1,7 @@
 package com.example.project_frontend.frontend.controller;
 
 import java.net.URISyntaxException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -9,10 +10,13 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.project_frontend.frontend.service.AdminService;
 import com.example.project_frontend.frontend.vo.CategoryVo;
+import com.example.project_frontend.frontend.vo.ItemVo;
+import com.example.project_frontend.frontend.vo.UserVo;
 
 @Controller
 public class MainController {
@@ -25,9 +29,6 @@ public class MainController {
 		List<String> list = new ArrayList<>();
 		List<Set<String>> lowCategory = new ArrayList<Set<String>>();
 		list.addAll(map.get("topcategory"));
-		System.out.println();
-		System.out.println(map);
-		System.out.println();
 		CategoryVo vo = new CategoryVo();
 
 		for (int i = 0; i < map.get("topcategory").size(); i++) {
@@ -39,12 +40,32 @@ public class MainController {
 		for (int i = 0; i < lowCategory.size(); i++) {
 			model.addAttribute("lowcategory" + i, lowCategory.get(i));
 		}
-		System.out.println();
-		System.out.println(model.toString());
-		System.out.println();
+		List<ItemVo> itemList = service.itemList();
+		model.addAttribute("item", itemList);
+
 		return "main/index";
 	}
 
+	@RequestMapping("/item/{no}")
+	public String itemDetail(@PathVariable("no") long no, Model model) throws URISyntaxException {
+		ItemVo itemNo = new ItemVo();
+		itemNo.setNo(no);
+		ItemVo vo = service.getItem(itemNo);
+		model.addAttribute("item", vo);
+		return "main/itemdetail";
+	}
+
+	@RequestMapping(value = "/basket/add/{no}")
+	public String basketAdd(@PathVariable("no") long no, Model model, Principal principal) throws URISyntaxException {
+		UserVo vo = new UserVo();
+		vo.setId(principal.getName());
+		vo = service.getuser(vo, no);
+		if (vo != null) {
+			return "main/successbasket";
+		}
+		return null;
+
+	}
 //	@RequestMapping("/test")
 //	public void test() throws URISyntaxException {
 //		RestTemplate restTemplate = new RestTemplate();

@@ -166,7 +166,14 @@ public class UserController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
 	}
-	
+	@RequestMapping(value = "/getuserone",method = RequestMethod.POST)
+	public ResponseEntity<JSONResult> getUserOne(@RequestBody UserVo uservo){
+		UserVo result = userService.getUserOne(uservo);
+		if (result == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail("로그인에 실패 하였습니다."));
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
+	}
 	// 회원 로그아웃
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {

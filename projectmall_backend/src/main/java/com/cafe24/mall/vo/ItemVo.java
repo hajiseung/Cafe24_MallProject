@@ -35,7 +35,7 @@ public class ItemVo {
 	private List<MultipartFile> multiPartPhoto;
 	private List<String> photo;
 	private List<Boolean> is_main;
-
+	private String main_photo;
 	// item_option
 	private List<String> name;
 
@@ -106,6 +106,10 @@ public class ItemVo {
 
 	public List<Boolean> getIs_main() {
 		return is_main;
+	}
+
+	public String getMain_photo() {
+		return main_photo;
 	}
 
 	public List<String> getName() {
@@ -188,6 +192,10 @@ public class ItemVo {
 		this.is_main = is_main;
 	}
 
+	public void setMain_photo(String main_photo) {
+		this.main_photo = main_photo;
+	}
+
 	public void setName(List<String> name) {
 		this.name = name;
 	}
@@ -214,8 +222,9 @@ public class ItemVo {
 				+ ", item_detail_no=" + item_detail_no + ", amount=" + amount + ", available_amount=" + available_amount
 				+ ", price=" + price + ", non_amount=" + non_amount + ", displaystatus=" + displaystatus
 				+ ", salestatus=" + salestatus + ", reg_date=" + reg_date + ", multiPartPhoto=" + multiPartPhoto
-				+ ", photo=" + photo + ", is_main=" + is_main + ", name=" + name + ", top_category=" + top_category
-				+ ", low_category=" + low_category + ", categoryVo=" + categoryVo + ", basketVo=" + basketVo + "]";
+				+ ", photo=" + photo + ", is_main=" + is_main + ", main_photo=" + main_photo + ", name=" + name
+				+ ", top_category=" + top_category + ", low_category=" + low_category + ", categoryVo=" + categoryVo
+				+ ", basketVo=" + basketVo + "]";
 	}
 
 }

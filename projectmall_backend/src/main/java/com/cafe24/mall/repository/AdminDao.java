@@ -129,4 +129,14 @@ public class AdminDao {
 		return vo;
 	}
 
+	public List<ItemVo> getItemList() {
+		List<ItemVo> list = sqlSession.selectList("admin.itemlist");
+		return list;
+	}
+
+	public ItemVo getItem(ItemVo itemVo) {
+		ItemVo vo = sqlSession.selectOne("admin.getitem", itemVo);
+		return vo;
+	}
+
 }
