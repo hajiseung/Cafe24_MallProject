@@ -50,4 +50,8 @@ public class UserService {
 		return userDao.getUserOne(uservo);
 	}
 
+	public UserVo getUserOneFromNo(UserVo uservo) {
+		return userDao.getUserOneFromNo(uservo);
+	}
+
 }

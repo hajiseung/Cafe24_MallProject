@@ -90,7 +90,6 @@ public class BasketController {
 		basketVo.setNo(basketNo);
 		basketVo.setItem_no(itemNo);
 
-		System.out.println(basketVo);
 		basketService.deleteItemFromBasket(basketVo);
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(basketVo));
 	}

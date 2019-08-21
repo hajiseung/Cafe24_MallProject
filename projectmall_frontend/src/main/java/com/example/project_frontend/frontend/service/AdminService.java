@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.project_frontend.frontend.dto.JSONResult;
 import com.example.project_frontend.frontend.vo.AdminVo;
+import com.example.project_frontend.frontend.vo.BasketListVo;
 import com.example.project_frontend.frontend.vo.BasketVo;
 import com.example.project_frontend.frontend.vo.CategoryVo;
 import com.example.project_frontend.frontend.vo.ItemVo;
@@ -156,13 +157,30 @@ public class AdminService {
 		return jsonReultItem.getData();
 	}
 
+	public List<ItemVo> itemList(UserVo vo, List<BasketVo> list) throws URISyntaxException {
+		RestTemplate restTemplate = new RestTemplate();
+		URI requestUri = null;
+		JSONResultItemVoList jsonReultItem = null;
+		for (int i = 0; i < list.size(); i++) {
+			requestUri = new URI(tmpUrl + "/item/list/" + vo.getNo());
+			jsonReultItem = restTemplate.getForObject(requestUri, JSONResultItemVoList.class);
+		}
+		return jsonReultItem.getData();
+	}
+
+	public List<BasketListVo> itemList(UserVo vo) throws URISyntaxException {
+		RestTemplate restTemplate = new RestTemplate();
+		URI requestUri = null;
+		JSONResultBasketListVo jsonReultItem = null;
+		requestUri = new URI(tmpUrl + "/item/list/" + vo.getNo());
+		jsonReultItem = restTemplate.getForObject(requestUri, JSONResultBasketListVo.class);
+		return jsonReultItem.getData();
+	}
+
 	public ItemVo getItem(ItemVo itemNo) throws URISyntaxException {
 		RestTemplate restTemplate = new RestTemplate();
 		URI requestUri = new URI(tmpUrl + "/item/get");
 		JSONResult<ItemVo> jsonReultItem = restTemplate.postForObject(requestUri, itemNo, JSONResultItemVo.class);
-		System.out.println();
-		System.out.println(jsonReultItem.getData());
-		System.out.println();
 		return jsonReultItem.getData();
 	}
 
@@ -170,18 +188,15 @@ public class AdminService {
 		BasketVo basketVo = new BasketVo();
 		basketVo.setItem_count(1L);
 		basketVo.setItem_no(no);
-		basketVo.setOption_no(5L);
-		
+
 		RestTemplate restTemplate = new RestTemplate();
 		URI requestUri = new URI("http://localhost:8080/projectmall_backend/api/user/getuserone");
 		JSONResult<UserVo> jsonReultItem = restTemplate.postForObject(requestUri, vo, JSONResultUserVoOne.class);
 		basketVo.setMember_no(jsonReultItem.getData().getNo());
-		
+
 		requestUri = new URI("http://localhost:8080/projectmall_backend/api/basket/add");
-		JSONResult<BasketVo> jsonReultItem2 = restTemplate.postForObject(requestUri, basketVo, JSONResultBasketVo.class);
-		System.out.println();
-		System.out.println(jsonReultItem2);
-		System.out.println();
+		JSONResult<BasketVo> jsonReultItem2 = restTemplate.postForObject(requestUri, basketVo,
+				JSONResultBasketVo.class);
 		return jsonReultItem.getData();
 
 	}
@@ -240,6 +255,9 @@ public class AdminService {
 	}
 
 	private static class JSONResultCategoryVo extends JSONResult<CategoryVo> {
+	}
+
+	private static class JSONResultBasketListVo extends JSONResult<List<BasketListVo>> {
 	}
 
 	private static class JSONResultBasketVo extends JSONResult<BasketVo> {

@@ -35,7 +35,6 @@ public class AdminController {
 	@GetMapping("/additem")
 	public String addItem(Model model) throws URISyntaxException {
 		Map<String, Set<String>> map = service.categoryList();
-		System.out.println(map);
 		model.addAttribute("categoryMap", map);
 		return "admin/additem";
 	}
@@ -52,7 +51,6 @@ public class AdminController {
 	@ResponseBody
 	public Set<String> getLowCategory(@ModelAttribute("top_category") CategoryVo top, Model model)
 			throws URISyntaxException {
-		System.out.println(top);
 		if ("null".equals(top)) {
 			return null;
 		}

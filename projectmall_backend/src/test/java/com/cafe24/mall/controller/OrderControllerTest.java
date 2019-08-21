@@ -51,15 +51,11 @@ public class OrderControllerTest {
 	public void testOrderAdd() throws Exception {
 		OrderVo vo = new OrderVo();
 		vo.setNo(1);
-		vo.setBasket_no(2);
 		vo.setShipping("동탄");
 		vo.setB_cell_ph("010-3333-7777");
-		vo.setB_tell_ph("706-7786");
-		vo.setOrder_identify("주문식별");
 		vo.setAccount("1006-401-222222");
 		vo.setMemo("테스트");
 		vo.setB_member("하지원");
-		vo.setTotal_price(300);
 		vo.setMethod_of_payment("카드");
 		ResultActions resultActions = mockMvc
 				.perform(post("/api/order/add").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));

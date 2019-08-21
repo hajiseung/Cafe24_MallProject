@@ -1,5 +1,6 @@
 package com.cafe24.mall.repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cafe24.mall.vo.AdminVo;
+import com.cafe24.mall.vo.BasketListVo;
 import com.cafe24.mall.vo.CategoryVo;
 import com.cafe24.mall.vo.ItemVo;
 import com.cafe24.mall.vo.TermVo;
@@ -134,8 +136,24 @@ public class AdminDao {
 		return list;
 	}
 
+	public List<BasketListVo> getItemList(UserVo vo) {
+		List<BasketListVo> list = sqlSession.selectList("admin.itemListInBasket", vo);
+		return list;
+
+	}
+
 	public ItemVo getItem(ItemVo itemVo) {
+		Map<String, Object> map = new HashMap<String, Object>();
 		ItemVo vo = sqlSession.selectOne("admin.getitem", itemVo);
+		List<ItemVo> option = sqlSession.selectList("admin.getOption", itemVo);
+		List<String> tmp = new ArrayList<String>();
+
+		for (int i = 0; i < option.size(); i++) {
+			tmp.add(option.get(i).getOption_name());
+		}
+
+		vo.setName(tmp);
+
 		return vo;
 	}
 

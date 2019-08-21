@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="admin">
-
 	<!-- 로그인 -->
 	<select id="login" parameterType="adminvo" resultType="adminvo">
 	<![CDATA[
@@ -192,6 +191,15 @@
 	]]>
 	</select>
 	
+	<select id="itemListInBasket" parameterType="uservo"
+		resultType="basketlistvo">
+	<![CDATA[
+		select d.item_count, d.accmulate, d.total_item_price, a.no as item_no, a.title, b.price, c.photo as main_photo
+		from item a, item_detail b, item_photo c, basket d 
+		where d.member_no=${no} and a.no=d.item_no and a.no=b.item_no and b.item_no=c.item_no and c.is_main=1;
+	]]>
+	</select>
+
 	<select id="getitem" parameterType="itemvo" resultType="itemvo">
 	<![CDATA[
 		select a.no, a.title, a.desc_html, b.amount, b.price, c.photo as main_photo
@@ -199,4 +207,11 @@
 		where a.no=#{no} and a.no=b.item_no and b.item_no=c.item_no and c.is_main=1 
 	]]>
 	</select>
+	<select id="getOption" parameterType="itemvo"
+		resultType="itemvo">
+	<![CDATA[
+		SELECT option_name FROM item_option WHERE item_no=#{no}
+	]]>
+	</select>
+
 </mapper>

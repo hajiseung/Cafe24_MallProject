@@ -1,6 +1,7 @@
 package com.cafe24.mall.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cafe24.mall.dto.JSONResult;
 import com.cafe24.mall.service.AdminService;
 import com.cafe24.mall.vo.AdminVo;
+import com.cafe24.mall.vo.BasketListVo;
 import com.cafe24.mall.vo.CategoryVo;
 import com.cafe24.mall.vo.ItemVo;
 import com.cafe24.mall.vo.TermVo;
@@ -94,13 +97,7 @@ public class AdminController {
 	// low카테고리 조회
 	@RequestMapping(value = "/lowcategory", method = RequestMethod.POST)
 	public ResponseEntity<JSONResult> lowCategory(@RequestBody CategoryVo topCategory) {
-		System.out.println(
-				"===========================================================================================================");
-		System.out.println(topCategory);
-		System.out.println(
-				"===========================================================================================================");
 		List<CategoryVo> resultSql = adminService.lowCategory(topCategory);
-		System.out.println(resultSql);
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(resultSql));
 	}
 
@@ -149,14 +146,13 @@ public class AdminController {
 	// 아이템 리스트
 	@RequestMapping(value = "/item/list", method = RequestMethod.GET)
 	public ResponseEntity<JSONResult> listItem() {
-		// 에러 출력
-//		if (result.hasErrors()) {
-//			List<ObjectError> list = result.getAllErrors();
-//			for (ObjectError error : list) {
-//				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.fail(error.getDefaultMessage()));
-//			}
-//		}
 		List<ItemVo> resultSql = adminService.listItem();
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(resultSql));
+	}
+
+	@RequestMapping(value = "/item/list/{no}", method = RequestMethod.GET)
+	public ResponseEntity<JSONResult> listItem(@PathVariable("no") long no) {
+		List<BasketListVo> resultSql = adminService.listItem(no);
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(resultSql));
 	}
 

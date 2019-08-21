@@ -30,11 +30,7 @@ public class UserDao {
 
 	// 유저 로그인
 	public UserVo loginUser(UserVo userVo) {
-		System.out.println("여기까진 들어오냐?");
 		UserVo pwUservo = sqlSession.selectOne("user.pwforlogin", userVo);
-		System.out.println(pwUservo);
-		System.out.println(userVo);
-		System.out.println();
 		return sqlSession.selectOne("user.loginUser", userVo);
 	}
 
@@ -66,6 +62,11 @@ public class UserDao {
 
 	public UserVo getUserOne(UserVo uservo) {
 		UserVo userno = sqlSession.selectOne("user.getuserone",uservo);
+		return userno;
+	}
+
+	public UserVo getUserOneFromNo(UserVo uservo) {
+		UserVo userno = sqlSession.selectOne("user.getuseronefromno",uservo);
 		return userno;
 	}
 }

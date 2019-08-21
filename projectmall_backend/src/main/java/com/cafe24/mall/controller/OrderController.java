@@ -2,8 +2,6 @@ package com.cafe24.mall.controller;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cafe24.mall.dto.JSONResult;
 import com.cafe24.mall.service.OrderService;
 import com.cafe24.mall.vo.OrderVo;
+import com.cafe24.mall.vo.PaymentVo;
 
 @RestController
 @RequestMapping(value = "/api/order")
@@ -36,5 +35,11 @@ public class OrderController {
 		}
 		orderService.addPurchase(orderVo);
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(orderVo));
+	}
+
+	@RequestMapping("/getpayment")
+	public ResponseEntity<JSONResult> getPayment() {
+		List<PaymentVo> list = orderService.getPayment();
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(list));
 	}
 }

@@ -23,7 +23,8 @@
 	<!-- /.Navigation -->
 
  	<div class="container" style="max-width: 1500px;">
-  		<h1>장바구니에 담았습니다</h1>
+  		<h1>결제가 중단되었습니다.</h1>
+  		<a href="${pageContext.servletContext.contextPath }/goods/order">주문페이지 가기</a>
 	</div>
 	
 	<!-- /.container -->

@@ -8,6 +8,12 @@
 		select * from member where id=#{id}
 	]]>
 	</select>
+	
+	<select id="getuseronefromno" parameterType="uservo" resultType="uservo">
+	<![CDATA[
+		select * from member where no=#{no}
+	]]>
+	</select>
 
 	<!-- 회원가입 -->
 	<insert id="insert" parameterType="uservo">

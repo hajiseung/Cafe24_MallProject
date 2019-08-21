@@ -37,10 +37,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		} else {
 			try {
 				userVo = userService.getUser(id);
-				System.out.println();
-				System.out.println(userVo);
-				System.out.println();
-//				userVo = userService.login(id);
 			} catch (URISyntaxException e) {
 				e.printStackTrace();
 			}

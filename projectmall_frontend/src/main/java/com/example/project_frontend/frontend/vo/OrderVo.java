@@ -1,4 +1,4 @@
-package com.cafe24.mall.vo;
+package com.example.project_frontend.frontend.vo;
 
 import java.util.List;
 
@@ -7,11 +7,9 @@ public class OrderVo {
 	private long no;// 주문 페이지 no
 	private long member_no;// 회원 no
 	private List<Long> item_no;// 물품 no
-	private long item_no_element; //
 	private long payment_no;// 결제 수단 번호
 	private String method_of_payment;// 결제 수단
 	private List<Long> total_price; // 장바구니 물품 가격 총 합
-	private long total_price_element;
 	private String shipping;// 수령배송지
 	private String b_member;// 수령인
 	private String b_cell_ph;// 휴대전화
@@ -30,10 +28,6 @@ public class OrderVo {
 		return item_no;
 	}
 
-	public long getItem_no_element() {
-		return item_no_element;
-	}
-
 	public long getPayment_no() {
 		return payment_no;
 	}
@@ -44,10 +38,6 @@ public class OrderVo {
 
 	public List<Long> getTotal_price() {
 		return total_price;
-	}
-
-	public long getTotal_price_element() {
-		return total_price_element;
 	}
 
 	public String getShipping() {
@@ -82,10 +72,6 @@ public class OrderVo {
 		this.item_no = item_no;
 	}
 
-	public void setItem_no_element(long item_no_element) {
-		this.item_no_element = item_no_element;
-	}
-
 	public void setPayment_no(long payment_no) {
 		this.payment_no = payment_no;
 	}
@@ -96,10 +82,6 @@ public class OrderVo {
 
 	public void setTotal_price(List<Long> total_price) {
 		this.total_price = total_price;
-	}
-
-	public void setTotal_price_element(long total_price_element) {
-		this.total_price_element = total_price_element;
 	}
 
 	public void setShipping(String shipping) {
@@ -124,11 +106,10 @@ public class OrderVo {
 
 	@Override
 	public String toString() {
-		return "OrderVo [no=" + no + ", member_no=" + member_no + ", item_no=" + item_no + ", item_no_element="
-				+ item_no_element + ", payment_no=" + payment_no + ", method_of_payment=" + method_of_payment
-				+ ", total_price=" + total_price + ", total_price_element=" + total_price_element + ", shipping="
-				+ shipping + ", b_member=" + b_member + ", b_cell_ph=" + b_cell_ph + ", memo=" + memo + ", account="
-				+ account + "]";
+		return "OrderVo [no=" + no + ", member_no=" + member_no + ", item_no=" + item_no + ", payment_no=" + payment_no
+				+ ", method_of_payment=" + method_of_payment + ", total_price=" + total_price + ", shipping=" + shipping
+				+ ", b_member=" + b_member + ", b_cell_ph=" + b_cell_ph + ", memo=" + memo + ", account=" + account
+				+ "]";
 	}
 
 }

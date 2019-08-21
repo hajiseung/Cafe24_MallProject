@@ -85,16 +85,14 @@
 			<!-- 사용자 -->			
 			<sec:authorize access="hasRole('ROLE_USER')">
 				<c:choose>
-					<c:when test='${param.active == "cs" }'>
+					<c:when test='${param.active == "basketlist" }'>
 						<li class="nav-item">
 							<a class="nav-link" href="${pageContext.servletContext.contextPath }">홈</a>
 						</li>
 						
 						<li class="nav-item active">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/cs">고객센터<span class="sr-only">(current)</span></a>
+							<a class="nav-link" href="${pageContext.servletContext.contextPath }/goods/list">장바구니<span class="sr-only">(current)</span></a>
 						</li>
-	
-	
 	
 						<li class="nav-item">
 							<a class="nav-link" href="${pageContext.servletContext.contextPath }/admin/logout">로그아웃</a>
@@ -107,9 +105,9 @@
 						</li>
 						
 						<li class="nav-item">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/cs">고객센터</a>
+							<a class="nav-link" href="${pageContext.servletContext.contextPath }/goods/list">장바구니</a>
 						</li>
-						
+	
 						<li class="nav-item">
 							<a class="nav-link" href="${pageContext.servletContext.contextPath }/admin/logout">로그아웃</a>
 						</li>
@@ -128,9 +126,6 @@
 						<li class="nav-item">
 							<a class="nav-link" href="${pageContext.servletContext.contextPath }/user/join">회원가입</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/cs">고객센터</a>
-						</li>
 					</c:when>
 					<c:when test='${param.active == "join" }'>
 						<li class="nav-item">
@@ -142,28 +137,9 @@
 						<li class="nav-item active">
 							<a class="nav-link" href="${pageContext.servletContext.contextPath }/user/join">회원가입<span class="sr-only">(current)</span></a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/cs">고객센터</a>
-						</li>
 						
 					</c:when>
 					
-					<c:when test='${param.active == "cs" }'>
-						<li class="nav-item">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }">홈</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/user/login">로그인</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/user/join">회원가입</a>
-						</li>
-						<li class="nav-item active">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/cs">고객센터<span class="sr-only">(current)</span></a>
-						</li>
-						
-					</c:when>		
-								
 					<c:when test='${param.active == "loginadmin" }'>
 						<li class="nav-item">
 							<a class="nav-link" href="${pageContext.servletContext.contextPath }">홈</a>
@@ -173,9 +149,6 @@
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="${pageContext.servletContext.contextPath }/user/join">회원가입</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/cs">고객센터</a>
 						</li>
 						
 					</c:when>
@@ -190,10 +163,6 @@
 						<li class="nav-item">
 							<a class="nav-link" href="${pageContext.servletContext.contextPath }/user/join">회원가입</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="${pageContext.servletContext.contextPath }/cs">고객센터</a>
-						</li>
-						
 					</c:otherwise>				
 				</c:choose>
 				</sec:authorize>

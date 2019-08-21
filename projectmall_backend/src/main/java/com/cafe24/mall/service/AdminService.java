@@ -1,6 +1,7 @@
 package com.cafe24.mall.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.cafe24.mall.repository.AdminDao;
 import com.cafe24.mall.repository.BasketDao;
 import com.cafe24.mall.vo.AdminVo;
+import com.cafe24.mall.vo.BasketListVo;
 import com.cafe24.mall.vo.BasketVo;
 import com.cafe24.mall.vo.CategoryVo;
 import com.cafe24.mall.vo.ItemVo;
@@ -107,5 +109,12 @@ public class AdminService {
 
 	public ItemVo getItem(ItemVo itemVo) {
 		return adminDao.getItem(itemVo);
+	}
+
+	public List<BasketListVo> listItem(long no) {
+		UserVo vo = new UserVo();
+		vo.setNo(no);
+		List<BasketListVo> result = adminDao.getItemList(vo);
+		return result;
 	}
 }

@@ -6,13 +6,25 @@
 	<insert id="addPurchase" parameterType="ordervo">
 	<![CDATA[
 		insert into purchase_page 
-		values(null,#{basket_no},#{total_price},#{shipping}, #{b_member},#{b_tell_ph},#{b_cell_ph},#{memo},#{order_identify},#{account})
+		values(null,#{member_no}, #{item_no_element}, #{payment_no}, #{total_price_element}, #{shipping}, #{b_member}, #{b_cell_ph}, #{memo})
 		]]>
-		<selectKey keyProperty="no" resultType="long" order="AFTER">
+		<!-- <selectKey keyProperty="no" resultType="long" order="AFTER">
 		<![CDATA[
 			select last_insert_id() as no
 		]]>
-		</selectKey>
+		</selectKey> -->
 	</insert>
 
+	<select id="getPayment" resultType="paymentvo">
+		<![CDATA[
+			select * from payment;
+		]]>
+	</select>
+	
+	<delete id="deletebasket" parameterType="ordervo">
+	<![CDATA[
+	 DELETE FROM basket
+     WHERE member_no=#{member_no}
+	]]>
+	</delete>
 </mapper>

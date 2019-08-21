@@ -51,6 +51,7 @@ public class MainController {
 		ItemVo itemNo = new ItemVo();
 		itemNo.setNo(no);
 		ItemVo vo = service.getItem(itemNo);
+		vo.setOption_names(vo.getName().toArray(new String[vo.getName().size()]));
 		model.addAttribute("item", vo);
 		return "main/itemdetail";
 	}
@@ -64,13 +65,7 @@ public class MainController {
 			return "main/successbasket";
 		}
 		return null;
-
 	}
-//	@RequestMapping("/test")
-//	public void test() throws URISyntaxException {
-//		RestTemplate restTemplate = new RestTemplate();
-//		URI uri = new URI("http://localhost:8080/projectmall_backend/api/admin/memberlist");
-//		String a = restTemplate.getForObject(uri, String.class);
-//		System.out.println(a);
-//	}
+	
+	
 }

@@ -12,6 +12,8 @@
 		<typeAlias type="com.cafe24.mall.vo.TermVo" alias="termvo" />
 		<typeAlias type="com.cafe24.mall.vo.OrderVo" alias="ordervo" />
 		<typeAlias type="com.cafe24.mall.vo.AdminVo" alias="adminvo" />
+		<typeAlias type="com.cafe24.mall.vo.BasketListVo" alias="basketlistvo" />
+		<typeAlias type="com.cafe24.mall.vo.PaymentVo" alias="paymentvo" />
 	</typeAliases>
 	
 	<mappers>

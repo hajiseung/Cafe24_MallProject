@@ -22,7 +22,7 @@
 			</otherwise>
 		</choose>
 	<![CDATA[
-	 #{item_no},#{option_no},#{item_count}, (select (price*0.1) from item_detail where item_no=#{item_no}), 
+	 #{item_no},#{item_count}, (select (price*0.1) from item_detail where item_no=#{item_no}), 
 		(select (price*#{item_count}) from item_detail where item_no=#{item_no}))
 	]]>
 		<selectKey keyProperty="no" resultType="long" order="AFTER">
@@ -58,10 +58,10 @@
 	<!-- 장바구니 리스트 -->
 	<select id="getBasketList" parameterType="basketvo" resultType="listvo">
 	<![CDATA[
-		SELECT a.item_no, e.photo, b.title, a.item_count, (a.item_count * c.price * 0.01) accmulate,(a.item_count * c.price) total_item_price
+		SELECT a.item_no, d.photo, b.title, a.item_count, (a.item_count * c.price * 0.01) accmulate,(a.item_count * c.price) total_item_price
 		FROM 
-		basket a, item b, item_detail c, item_option d, item_photo e 
-		WHERE 
+		basket a, item b, item_detail c, item_photo d 
+		WHERE
 	]]>
 	<choose>
 	<when test="member_no!=0">
@@ -76,12 +76,10 @@
 	</otherwise>
 	</choose>		
 	<![CDATA[
-		and a.item_no=b.no 
+		and a.item_no=b.no
 		and b.no=c.item_no 
 		and c.item_no=d.item_no 
-		and d.item_no=e.item_no 
-		and a.option_no = d.no 
-		and e.is_main=1
+		and d.is_main=1
 	]]>
 	</select>
 </mapper>

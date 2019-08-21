@@ -1,5 +1,6 @@
 package com.example.project_frontend.frontend.vo;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
@@ -41,6 +42,8 @@ public class ItemVo {
 
 	// item_option
 	private List<String> name;
+	private String option_name;
+	private String[] option_names;
 
 	// item_category
 	private CategoryVo categoryVo;
@@ -121,6 +124,14 @@ public class ItemVo {
 
 	public List<String> getName() {
 		return name;
+	}
+
+	public String getOption_name() {
+		return option_name;
+	}
+
+	public String[] getOption_names() {
+		return option_names;
 	}
 
 	public CategoryVo getCategoryVo() {
@@ -207,6 +218,14 @@ public class ItemVo {
 		this.name = name;
 	}
 
+	public void setOption_name(String option_name) {
+		this.option_name = option_name;
+	}
+
+	public void setOption_names(String[] option_names) {
+		this.option_names = option_names;
+	}
+
 	public void setCategoryVo(CategoryVo categoryVo) {
 		this.categoryVo = categoryVo;
 	}
@@ -223,7 +242,8 @@ public class ItemVo {
 				+ ", price=" + price + ", non_amount=" + non_amount + ", displaystatus=" + displaystatus
 				+ ", salestatus=" + salestatus + ", reg_date=" + reg_date + ", multiPartPhoto=" + multiPartPhoto
 				+ ", photo=" + photo + ", is_main=" + is_main + ", main_photo=" + main_photo + ", name=" + name
-				+ ", categoryVo=" + categoryVo + ", basketVo=" + basketVo + "]";
+				+ ", option_name=" + option_name + ", option_names=" + Arrays.toString(option_names) + ", categoryVo="
+				+ categoryVo + ", basketVo=" + basketVo + "]";
 	}
 
 }

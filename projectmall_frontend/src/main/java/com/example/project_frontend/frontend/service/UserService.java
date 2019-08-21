@@ -19,9 +19,6 @@ public class UserService {
 
 	public UserVo joinUser(UserVo uservo) throws URISyntaxException {
 		uservo.setPw(passwordEncoder.encode(uservo.getPw()));
-		System.out.println();
-		System.out.println(uservo);
-		System.out.println();
 		RestTemplate template = new RestTemplate();
 		URI requestUri = new URI(tmpUrl + "/join");
 		JSONResult<UserVo> result = null;
@@ -47,7 +44,6 @@ public class UserService {
 		URI requestUri = new URI(tmpUrl + "/getuser");
 		JSONResult<UserVo> result = null;
 		result = template.postForObject(requestUri, uservo, JSONResultUser.class);
-		System.out.println("@@@@@@@@@" + result + "@@@@@@@");
 		return (UserVo) result.getData();
 	}
 
